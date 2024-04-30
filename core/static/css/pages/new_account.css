@@ -11,11 +11,6 @@ body{
     width: 930px;
 }
 
-/*------------ Right box ------------*/
-
-.right-box{
-    padding: 40px 30px 40px 40px;
-}
 
 /*------------ Custom Placeholder ------------*/
 
@@ -23,14 +18,11 @@ body{
     font-size: 16px;
 }
 
-.rounded-4{
-    border-radius: 20px;
-}
 .rounded-5{
     border-radius: 30px;
 }
 
-.login-button {
+.finish-registration-button {
     background-color: #09112d;
 }
 
@@ -38,17 +30,7 @@ body{
 /*------------ For small screens------------*/
 
 @media only screen and (max-width: 768px){
-
      .box-area{
         margin: 0 10px;
-
      }
-     .left-box{
-        height: 100px;
-        overflow: hidden;
-     }
-     .right-box{
-        padding: 20px;
-     }
-
 }
