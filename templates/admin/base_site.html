@@ -1,8 +1,20 @@
 {% extends 'admin/base.html' %}
 {% load static %}
 {% block branding %}
-    <h1 id="head">
-        <img src="{% static 'img/pages/index/image5.svg' %}" alt="PROSESMT Logo" height="100"
-        width="250px" class="logo_img"> Área Administrativa
+    <h1 id="head"> Portal do Cliente PROSESMT - Área Administrativa
     </h1>
+{% endblock %}
+
+{% block extrastyle %}{{ block.super }}
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 14px; 
+    font-family: "Roboto","Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif; 
+}
+#header, .module caption {
+    background-color: #09112d;
+}
+</style>
 {% endblock %}
