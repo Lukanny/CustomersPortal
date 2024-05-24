@@ -43,10 +43,10 @@
                 <form action="{% url 'login' %}" method="POST">
                     {% csrf_token %}
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control form-control-lg bg-light fs-6" placeholder="E-mail">
+                        <input type="text" name='usuario' class="form-control form-control-lg bg-light fs-6" placeholder="Usuário">
                     </div>
                     <div class="input-group mb-1">
-                        <input type="password" class="form-control form-control-lg bg-light fs-6" placeholder="Senha">
+                        <input type="password" name="senha" class="form-control form-control-lg bg-light fs-6" placeholder="Senha">
                     </div>
                     <div class="input-group mb-5 d-flex justify-content-between">
                         <div class="form-check">
@@ -71,4 +71,6 @@
     </div>
 
 </body>
+    <script src="/static/js/jquery-3.7.1.min.js"></script>
+    <script src="/static/js/main.js"></script>
 </html>

@@ -10,6 +10,7 @@ class Cliente(models.Model):
     endereço_da_empresa = models.CharField(max_length=254)
     número_de_telefone_da_empresa = models.CharField(max_length=15)
     email_da_empresa = models.EmailField(max_length=254)
+    usuário_da_empresa = models.CharField(max_length=254)
     data_de_registro_da_empresa = models.DateTimeField(editable=False)
     última_edição_no_perfil_da_empresa = models.DateTimeField(editable=False)
 
