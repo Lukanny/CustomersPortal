@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages, auth
+from django.contrib.auth import logout
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from customers.models import Cliente
 from string import punctuation
 
+@login_required
 def dashboard(request):
     return render(request, "accounts/dashboard.html")
 
@@ -22,8 +25,9 @@ def login(request):
     else:
         return render(request, "accounts/login.html")
 
-def logout(request):
-    return redirect('index')
+def custom_logout(request):
+    logout(request)
+    return redirect('login')
 
 def forgot_password(request):
     if request.method == "POST":
