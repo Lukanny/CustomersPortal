@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages, auth
-from django.contrib.auth import logout
+from django.contrib.auth import logout, views as auth_views
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from customers.models import Cliente
@@ -29,12 +29,6 @@ def custom_logout(request):
     logout(request)
     return redirect('login')
 
-def forgot_password(request):
-    if request.method == "POST":
-        #logic
-        return
-    else:
-        return render(request, "accounts/forgot_password.html")
 
 def register(request):
     if request.method == "POST":
@@ -86,3 +80,13 @@ def register(request):
         return redirect('register')
     else:
         return render(request, "accounts/new_account.html")
+
+
+class CustomPasswordResetView(auth_views.PasswordResetView):
+    template_name = 'registration/password_reset_form.html'
+    subject_template_name = 'registration/password_reset_subject.txt'
+    success_url = 'password_reset_done'
+
+class CustomPasswordResetConfirmView(auth_views.PasswordResetConfirmView):
+    template_name = 'registration/password_reset_confirm.html'
+    success_url = 'password_reset_complete'

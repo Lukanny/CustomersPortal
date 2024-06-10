@@ -2,5 +2,5 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('<int:file_id>', views.fetch_file, name='fetch_file'),
+    path('get_customer_files', views.get_customer_files, name='fetch_files'),
 ]

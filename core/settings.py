@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
+    'django.contrib.sites',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
@@ -147,3 +148,15 @@ MESSAGE_TAGS = {
 
 # Authentication redirects
 LOGIN_URL = 'login'
+
+# EMAIL Conf
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.titan.email'
+EMAIL_PORT = '465'
+EMAIL_USE_SSL = True
+EMAIL_USE_TSL = False
+EMAIL_HOST_USER = 'administracao@prosesmtsegurancadotrabalho.com'
+EMAIL_HOST_PASSWORD = 'D;0>OAFU}TlM6&|'
+DEFAULT_FROM_EMAIL = 'administracao@prosesmtsegurancadotrabalho.com'
+
+SITE_ID = 1

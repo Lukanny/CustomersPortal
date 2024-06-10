@@ -1,7 +1,11 @@
-from django.http import FileResponse, Http404
+from django.http import HttpResponse
+from customers.models import Cliente
+from .models import Arquivo
 
-def fetch_file(request):
-    try:
-        return FileResponse(open('foobar.pdf', 'rb'), content_type='application/pdf')
-    except FileNotFoundError:
-        raise Http404()
+def get_customer_files(request):
+    if request.user.is_authenticated:
+        customer = Cliente.objects.filter(usuário_da_empresa=request.user.username)
+        return Arquivo.objects.filter(cliente=customer)
+    else:
+        return HttpResponse('User Not Authenticated!')
+    
