@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Bootstrap CSS-->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <!--Index page CSS-->
+    <link href="{% static 'css/pages/new_account.css' %}" rel="stylesheet">
+    <title>Portal do Cliente - PROSESMT</title>
+</head>
+<body>
+    <div class="container d-flex justify-content-center align-items-center mt-3">
+        <div class="row border rounded-5 p-3 bg-white shadow box-area">
+            <div class="row align-items-center">
+                <h2 class="header-text mb-4 text-center">
+                    Informações necessárias para cadastro
+                </h2>
+                <!-- Alerts -->
+                {% include 'partials/_alert.html' %}
+                <form action="{% url 'register' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="input-group mb-3">
+                        <input type="text" name='empregado_nome' class="form-control form-control-md bg-light fs-6" placeholder="Nome do Representante Legal da Empresa"required >
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" name="empregado_rg" class="form-control form-control-md bg-light fs-6" placeholder="RG do Representante Legal da Empresa" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" name="empregado_cpf" class="form-control form-control-md bg-light fs-6" placeholder="CPF do Representante Legal da Empresa" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" name="empregado_cargo" class="form-control form-control-md bg-light fs-6" placeholder="Cargo do Representante Legal da Empresa" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" name='nome_empresa' class="form-control form-control-md bg-light fs-6" placeholder="Nome Fantasia da Empresa" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" name='endereco_empresa' class="form-control form-control-md bg-light fs-6" placeholder="Endereço" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="number" name='telefone_empresa' class="form-control form-control-md bg-light fs-6" placeholder="Telefone" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="email" name='email_empresa' class="form-control form-control-md bg-light fs-6" placeholder="E-mail" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="email" name='email_empresa2' class="form-control form-control-md bg-light fs-6" placeholder="Confirmar E-mail" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" name='usuario' class="form-control form-control-md bg-light fs-6" placeholder="Usuário" required>
+                    </div>
+                    <div class="input-group mb-1">
+                        <input type="password" name="senha" class="form-control form-control-md bg-light fs-6" aria-describedby="passwordHelpBlock" placeholder="Senha" required>
+                    </div>
+                    <div class="input-group mb-1">
+                        <input type="password" name='senha2' class="form-control form-control-md bg-light fs-6" aria-describedby="passwordHelpBlock" placeholder="Confirmar Senha" required>
+                    </div>
+                    <div id="passwordHelpBlock" class="form-text mb-3">
+                        Sua senha deve ter entre 8-20 caracteres, combinando letras, números e símbolos especiais.
+                    </div>
+                    <div class="input-group mb-3">
+                        <button class="btn btn-lg btn-primary w-100 fs-6 finish-registration-button">Concluir cadastro</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+    <script src="/static/js/jquery-3.7.1.min.js"></script>
+    <script src="/static/js/main.js"></script>
+</html>

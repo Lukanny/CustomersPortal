@@ -1,0 +1,236 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+*,
+::after,
+::before {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.875rem;
+    opacity: 1;
+    overflow-y: scroll;
+    margin: 0;
+}
+
+a {
+    cursor: pointer;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+}
+
+li {
+    list-style: none;
+}
+
+h4,h5,h6 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.275rem;
+    color: var(--bs-emphasis-color);
+}
+
+/* Layout for admin dashboard skeleton */
+
+.wrapper {
+    align-items: stretch;
+    display: flex;
+    width: 100%;
+}
+
+#sidebar {
+    max-width: 264px;
+    min-width: 264px;
+    background: var(--bs-dark);
+    transition: all 0.35s ease-in-out;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-width: 0;
+    overflow: hidden;
+    transition: all 0.35s ease-in-out;
+    width: 100%;
+    background: #E0F2F1;
+}
+
+/* Sidebar Elements Style */
+
+.sidebar-logo {
+    padding: 1.15rem;
+}
+
+.sidebar-logo a {
+    color: #e9ecef;
+    font-size: 1.15rem;
+    font-weight: 600;
+}
+
+.sidebar-nav {
+    flex-grow: 1;
+    list-style: none;
+    margin-bottom: 0;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+.sidebar-header {
+    color: #e9ecef;
+    font-size: .75rem;
+    padding: 1.5rem 1.5rem .375rem;
+}
+
+a.sidebar-link {
+    padding: .625rem 1.625rem;
+    color: #e9ecef;
+    position: relative;
+    display: block;
+    font-size: 0.875rem;
+}
+
+.sidebar-link[data-bs-toggle="collapse"]::after {
+    border: solid;
+    border-width: 0 .075rem .075rem 0;
+    content: "";
+    display: inline-block;
+    padding: 2px;
+    position: absolute;
+    right: 1.5rem;
+    top: 1.4rem;
+    transform: rotate(-135deg);
+    transition: all .2s ease-out;
+}
+
+.sidebar-link[data-bs-toggle="collapse"].collapsed::after {
+    transform: rotate(45deg);
+    transition: all .2s ease-out;
+}
+
+.avatar {
+    height: 90px;
+    width: 225px;
+}
+
+.navbar-expand .navbar-nav {
+    margin-left: auto;
+}
+
+.content {
+    flex: 1;
+    max-width: 100vw;
+    width: 100vw;
+}
+
+@media (min-width:768px) {
+    .content {
+        max-width: auto;
+        width: auto;
+    }
+}
+
+.card {
+    box-shadow: 0 0 .875rem 0 rgba(34, 46, 60, .05);
+    margin-bottom: 24px;
+    background-color: #09112d;
+}
+
+.illustration {
+    background-color: #09112d;
+}
+
+/* Sidebar Toggle */
+
+#sidebar.collapsed {
+    margin-left: -264px;
+}
+
+/* Footer and Nav */
+
+@media (max-width:767.98px) {
+
+    .js-sidebar {
+        margin-left: -264px;
+    }
+
+    #sidebar.collapsed {
+        margin-left: 0;
+    }
+
+    .navbar,
+    footer {
+        width: 100vw;
+    }
+}
+.dataTables_wrapper .dataTables_filter {
+    float: right !important;
+    text-align: right !important;
+    margin-right: 5% !important;
+}
+.dataTables_wrapper .dataTables_paginate {
+    float: right !important;
+    text-align: right !important;
+    margin-right: 5% !important;
+}
+.dataTables_wrapper .dataTables_info {
+    float: left !important;
+    text-align: left !important;
+    margin-left: 5% !important;
+}
+.dataTables_wrapper .dataTables_length {
+    float: left !important;
+    text-align: left !important;
+    margin-left: 5% !important;
+}
+/* Custom table header styles */
+#fileTable thead th {
+    background-color: #09112d !important; 
+    color: white !important;
+    text-align: center !important;
+}
+/* Custom row styles */
+#fileTable tbody tr:nth-child(even) {
+    background-color: #f2f2f2 !important;
+}
+#fileTable tbody tr:hover {
+    background-color: #ddd !important;
+}
+#fileTable tbody tr td {
+    text-align: center !important;
+}
+/* Custom pagination styles */
+.dataTables_paginate .paginate_button {
+    padding: 5px 10px !important;
+    margin: 2px !important;
+    border: 1px solid #ddd !important;
+    background-color: #f9f9f9 !important;
+    cursor: pointer !important;
+}
+.dataTables_paginate .paginate_button.current {
+    background-color: #4CAF50 !important; /* Green */
+    color: white !important;
+    border: none !important;
+}
+
+.dataTables_filter input {
+    color: black; /* Set text color to black */
+    background-color: #fff; /* Set background color to white */
+    border: 1px solid #ccc; /* Add border for clarity */
+    padding: 5px; /* Add padding for better appearance */
+    border-radius: 4px; /* Optional: Rounded corners */
+}
+
+.dataTables_length select {
+    color: black; /* Set text color to black */
+    background-color: #fff; /* Set background color to white */
+    border: 1px solid #ccc; /* Add border for clarity */
+    padding: 5px; /* Add padding for better appearance */
+    border-radius: 4px; /* Optional: Rounded corners */
+}
+
+#fileTable {
+    border-radius: 10px; /* Adjust radius as needed */
+    overflow: hidden; /* Ensure overflow doesn't show corners of child elements */
+    border: 1px solid #ccc; /* Optional: Add a border around the table */
+}

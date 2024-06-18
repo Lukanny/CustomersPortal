@@ -1,0 +1,302 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+    --primary: #09112d;
+    --secondary: #154161;
+    --button: #168916;
+    --body: #cecece;
+    --text: #ffffff;
+}
+
+body {
+    font-family: "Montserrat" !important;
+    font-weight: 700 !important
+}
+
+a {
+    text-decoration: none !important;
+}
+
+.navbar {
+    background-color: var(--primary);
+}
+
+.nav-link {
+    color: var(--text) !important;
+    margin: 20px;
+}
+
+.logo {
+  max-width: 250px;
+  margin-right: 6px;
+}
+
+.contact-button {
+    background-color: var(--button) !important;
+    box-shadow: none !important;
+}
+
+.reason-card {
+    border: 5px solid white;
+    padding: 50px;
+    margin: 20px;
+    border-radius: 10%;
+}
+
+.who-we-are-text {
+  text-align: justify !important;
+  text-justify: inter-word !important;
+}
+
+.who-we-are-p {
+  font-weight: 700 !important;
+  text-shadow: 2px 2px #09112d;
+}
+
+.who-we-are::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(36, 36, 38, 0.8);
+  z-index: -1;
+}
+
+.area-of-business-text {
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.area-of-business-p {
+  font-weight: 700 !important;
+}
+
+.brazil-map {
+  height: 480px;
+}
+
+@media(max-width: 1024px) {
+  .small {
+      display: none;
+  }
+}
+
+.our-services {
+    background-color: var(--secondary)
+}
+
+.our-services-text {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+@media(max-width: 576px) {
+  .extra-small {
+    display: none;
+  }
+}
+
+.dropdown-item {
+  white-space: normal !important;
+}
+
+ /* Clients Section - Home Page
+------------------------------*/
+.clients {
+  padding: 10px 0;
+  background-color: #fafbff;
+}
+
+.clients-header {
+  color: #012970;
+}
+
+.clients .client-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.clients .client-logo img {
+  padding: 40px;
+  max-width: 80%;
+  transition: 0.3s;
+  opacity: 0.5;
+  filter: grayscale(100);
+}
+
+.clients .client-logo img:hover {
+  filter: none;
+  opacity: 1;
+}
+
+@media (max-width: 640px) {
+  .clients .client-logo img {
+    padding: 20px;
+  }
+}
+
+/*--------------------------------------------------------------
+# Services
+--------------------------------------------------------------*/
+.services .service-box {
+  box-shadow: 0px 0 30px rgba(1, 41, 112, 0.08);
+  height: 100%;
+  padding: 60px 30px;
+  text-align: center;
+  transition: 0.3s;
+  border-radius: 5px;
+}
+
+.services .service-box .icon {
+  font-size: 36px;
+  padding: 40px 20px;
+  border-radius: 4px;
+  position: relative;
+  margin-bottom: 25px;
+  display: inline-block;
+  line-height: 0;
+  transition: 0.3s;
+}
+
+.services .service-box h3 {
+  color: #444444;
+  font-weight: 700;
+}
+
+.services .service-box .read-more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 8px 20px;
+}
+
+.services .service-box .read-more i {
+  line-height: 0;
+  margin-left: 5px;
+  font-size: 18px;
+}
+
+.services .service-box.blue {
+  border-bottom: 3px solid white;
+}
+
+.services .service-box.blue:hover {
+  background: #09112d;
+}
+
+.services .service-box.orange {
+  border-bottom: 3px solid white;
+}
+
+.services .service-box.orange:hover {
+  background: #09112d;
+}
+
+.services .service-box.green {
+  border-bottom: 3px solid white;
+}
+
+.services .service-box.green:hover {
+  background: #09112d;
+}
+
+.services .service-box:hover h3,
+.services .service-box:hover p,
+.services .service-box:hover .read-more {
+  color: #fff;
+}
+
+.services .service-box:hover .icon {
+  background: #fff;
+}
+
+.float {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  bottom: 40px;
+  right: 40px;
+  background-color: #168916;
+  color: #FFF;
+  border-radius: 50px;
+  text-align: center;
+  font-size: 30px;
+  box-shadow: 2px 2px 3px #999;
+  z-index: 100;
+}
+
+.my-float {
+  margin-top: 16px;
+}
+
+.btn-group {
+  white-space: normal;
+}
+
+/*--------------------------------------------------------------
+# Services
+--------------------------------------------------------------*/
+.services .icon-box {
+  padding: 30px 20px;
+  text-align: justify;
+  text-justify: inter-word;
+  transition: all ease-in-out 0.3s;
+}
+
+.services .icon-box .icon::before {
+  position: absolute;
+  content: "";
+  left: -8px;
+  top: -8px;
+  height: 100%;
+  width: 100%;
+  background: rgba(25, 119, 204, 0.2);
+  border-radius: 5px;
+  transition: all 0.3s ease-out 0s;
+  transform: translateZ(-1px);
+  z-index: -1;
+}
+
+.services .icon-box h4 {
+  font-weight: 700;
+  margin-bottom: 15px;
+  font-size: 24px;
+}
+
+.services .icon-box h4 a {
+  color: #2c4964;
+}
+
+.services .icon-box p {
+  line-height: 24px;
+  font-size: 14px;
+  margin-bottom: 0;
+}
+
+.services .icon-box:hover {
+  background: #1977cc;
+  border-color: #1977cc;
+}
+
+.services .icon-box:hover .icon {
+  background: #fff;
+}
+
+.services .icon-box:hover .icon i {
+  color: #1977cc;
+}
+
+.services .icon-box:hover .icon::before {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.services .icon-box:hover h4 a,
+.services .icon-box:hover p {
+  color: #fff;
+}
