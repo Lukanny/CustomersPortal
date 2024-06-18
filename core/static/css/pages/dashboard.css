@@ -53,7 +53,7 @@ h4,h5,h6 {
     overflow: hidden;
     transition: all 0.35s ease-in-out;
     width: 100%;
-    background: #fff;
+    background: #E0F2F1;
 }
 
 /* Sidebar Elements Style */
@@ -162,4 +162,75 @@ a.sidebar-link {
     footer {
         width: 100vw;
     }
+}
+.dataTables_wrapper .dataTables_filter {
+    float: right !important;
+    text-align: right !important;
+    margin-right: 5% !important;
+}
+.dataTables_wrapper .dataTables_paginate {
+    float: right !important;
+    text-align: right !important;
+    margin-right: 5% !important;
+}
+.dataTables_wrapper .dataTables_info {
+    float: left !important;
+    text-align: left !important;
+    margin-left: 5% !important;
+}
+.dataTables_wrapper .dataTables_length {
+    float: left !important;
+    text-align: left !important;
+    margin-left: 5% !important;
+}
+/* Custom table header styles */
+#fileTable thead th {
+    background-color: #09112d !important; 
+    color: white !important;
+    text-align: center !important;
+}
+/* Custom row styles */
+#fileTable tbody tr:nth-child(even) {
+    background-color: #f2f2f2 !important;
+}
+#fileTable tbody tr:hover {
+    background-color: #ddd !important;
+}
+#fileTable tbody tr td {
+    text-align: center !important;
+}
+/* Custom pagination styles */
+.dataTables_paginate .paginate_button {
+    padding: 5px 10px !important;
+    margin: 2px !important;
+    border: 1px solid #ddd !important;
+    background-color: #f9f9f9 !important;
+    cursor: pointer !important;
+}
+.dataTables_paginate .paginate_button.current {
+    background-color: #4CAF50 !important; /* Green */
+    color: white !important;
+    border: none !important;
+}
+
+.dataTables_filter input {
+    color: black; /* Set text color to black */
+    background-color: #fff; /* Set background color to white */
+    border: 1px solid #ccc; /* Add border for clarity */
+    padding: 5px; /* Add padding for better appearance */
+    border-radius: 4px; /* Optional: Rounded corners */
+}
+
+.dataTables_length select {
+    color: black; /* Set text color to black */
+    background-color: #fff; /* Set background color to white */
+    border: 1px solid #ccc; /* Add border for clarity */
+    padding: 5px; /* Add padding for better appearance */
+    border-radius: 4px; /* Optional: Rounded corners */
+}
+
+#fileTable {
+    border-radius: 10px; /* Adjust radius as needed */
+    overflow: hidden; /* Ensure overflow doesn't show corners of child elements */
+    border: 1px solid #ccc; /* Optional: Add a border around the table */
 }

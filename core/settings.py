@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'django_cleanup.apps.CleanupConfig',
 ]
 
@@ -55,7 +56,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'core.urls'
 
@@ -159,4 +163,4 @@ EMAIL_HOST_USER = 'administracao@prosesmtsegurancadotrabalho.com'
 EMAIL_HOST_PASSWORD = 'D;0>OAFU}TlM6&|'
 DEFAULT_FROM_EMAIL = 'administracao@prosesmtsegurancadotrabalho.com'
 
-SITE_ID = 1
+SITE_ID = 2

@@ -1,14 +1,34 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import messages, auth
 from django.contrib.auth import logout, views as auth_views
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from customers.models import Cliente
+from customers.models import Empresa, Representante
+from customers.forms import RepresentanteForm
 from string import punctuation
 
 @login_required
 def dashboard(request):
-    return render(request, "accounts/dashboard.html")
+    try:
+        worker = Representante.objects.get(username__username=request.user.username)
+        company = worker.empresa
+        files = company.files.all()
+        return render(request, "accounts/dashboard.html", {'files':files, 'worker':worker})
+    except Representante.DoesNotExist:
+        return HttpResponse('<h1>Não há um representante cadastrado, por favor, contatar o suporte.</h1>')
+
+
+@login_required
+def change_user_info(request):
+    worker = Representante.objects.get(username__username=request.user.username)
+    if request.method == 'POST':
+        form = RepresentanteForm(request.POST, instance=worker)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Mudanças salvas com sucesso!')
+    else:
+        form = RepresentanteForm(instance=worker)
+    return render(request, "accounts/change_user_info.html",  {'form': form, 'worker': worker})
 
 def login(request):
     if request.method == "POST":
@@ -57,25 +77,33 @@ def register(request):
         if not company_email == confirm_company_email:
             messages.error(request, 'Os e-mails informados não são iguais!')
             return redirect('register')
-        if not Cliente.objects.filter(nome_fantasia_da_empresa=company_name):
-                customer = Cliente.objects.create(nome_do_representante_legal=employee, rg_do_representante_legal=employee_id, cpf_do_representante_legal=employee_nif, cargo_do_representante_legal=employee_position, 
-                                        nome_fantasia_da_empresa=company_name, endereço_da_empresa=company_adress, número_de_telefone_da_empresa=company_number, email_da_empresa=company_email)
+
+
+        if not Empresa.objects.filter(nome_fantasia_da_empresa=company_name):
+                customer = Empresa.objects.create(nome_fantasia_da_empresa=company_name, endereço_da_empresa=company_adress, número_de_telefone_da_empresa=company_number, email_da_empresa=company_email)
                 customer.save()
-                if not User.objects.filter(username=username):
-                    user = User.objects.create_user(username=username, email=company_email, password=password)
+                if User.objects.filter(username=username):
+                    messages.error(request, 'Usuário já em uso!')
+                    return redirect('register')
+                else:
+                    user = User.objects.create_user(username=username, email=company_email, password=password, first_name=employee.split(' ')[0], last_name=employee.split(' ')[-1])
                     user.save()
+                    worker = Representante.objects.create(empresa=customer, nome_do_representante_legal=employee, rg_do_representante_legal=employee_id, cpf_do_representante_legal=employee_nif, cargo_do_representante_legal=employee_position, username=user)
+                    worker.save()
                     messages.success(request, 'Conta criada, faça login na plataforma com o usuário e senha cadastrados!')
                     return redirect('login')
-                messages.error(request, 'Usuário já em uso!')
-                return redirect('register')
-        if not Cliente.objects.filter(nome_do_representante_legal=employee):
-            if not User.objects.filter(username=username):
-                user = User.objects.create_user(username=username, email=company_email, password=password)
-                user.save()
-                messages.success(request, 'Conta criada, faça login na plataforma com o usuário e senha cadastrados!')
-                return redirect('login')
-            messages.error(request, 'Usuário já em uso!')
-            return redirect('register')
+        if not Representante.objects.filter(nome_do_representante_legal=employee):
+                if User.objects.filter(username=username):
+                    messages.error(request, 'Usuário já em uso!')
+                    return redirect('register')
+                else:
+                    user = User.objects.create_user(username=username, email=company_email, password=password, first_name=employee.split(' ')[0], last_name=employee.split(' ')[-1])
+                    user.save()
+                    customer = Empresa.objects.get(nome_fantasia_da_empresa=company_name)
+                    worker = Representante.objects.create(empresa=customer, nome_do_representante_legal=employee, rg_do_representante_legal=employee_id, cpf_do_representante_legal=employee_nif, cargo_do_representante_legal=employee_position, username=user)
+                    worker.save()
+                    messages.success(request, 'Conta criada, faça login na plataforma com o usuário e senha cadastrados!')
+                    return redirect('login')
         messages.error(request, 'Representante legal já cadastrado!')
         return redirect('register')
     else:
