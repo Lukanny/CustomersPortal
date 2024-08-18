@@ -1,14 +1,18 @@
 services:
   django_gunicorn:
-    volumes:
-      - static:/static
-    env_file: 
-      - .env
     build:
       context: .
+    volumes:
+      - static:/app/static
+    env_file: 
+      - .env
     ports:
-      - '8000'
-  
+      - '8000:8000'
+    depends_on:
+      - db
+    networks:
+      - app_network
+
   nginx:
     build: ./nginx
     volumes:
@@ -16,8 +20,22 @@ services:
     ports:
       - "80:80"
     depends_on:
-      -  django_gunicorn
+      - django_gunicorn
+    networks:
+      - app_network
 
+  db:
+    image: mysql:8.0
+    volumes:
+      - mysql_data:/var/lib/mysql
+    env_file: 
+      - .env
+    networks:
+      - app_network
 
 volumes:
   static:
+  mysql_data:
+
+networks:
+  app_network:

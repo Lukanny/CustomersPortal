@@ -56,11 +56,11 @@ def register(request):
         employee_id = request.POST['empregado_rg']
         employee_nif = request.POST['empregado_cpf']
         employee_position = request.POST['empregado_cargo']
+        employee_email = request.POST['email_funcionario']
+        confirm_employee_email = request.POST['email_funcionario2']
         company_name = request.POST['nome_empresa']
         company_adress = request.POST['endereco_empresa']
         company_number = request.POST['telefone_empresa']
-        company_email = request.POST['email_empresa']
-        confirm_company_email = request.POST['email_empresa2']
         username = request.POST['usuario']
         password = request.POST['senha']
         confirm_password = request.POST['senha2']
@@ -74,21 +74,21 @@ def register(request):
         if not any(ch.isdigit() for ch in password) or not any(c in punctuation for c in password):
             messages.error(request, 'A senha deve conter letras e números!')
             return redirect('register')
-        if not company_email == confirm_company_email:
+        if not employee_email == confirm_employee_email:
             messages.error(request, 'Os e-mails informados não são iguais!')
             return redirect('register')
 
 
         if not Empresa.objects.filter(nome_fantasia_da_empresa=company_name):
-                customer = Empresa.objects.create(nome_fantasia_da_empresa=company_name, endereço_da_empresa=company_adress, número_de_telefone_da_empresa=company_number, email_da_empresa=company_email)
+                customer = Empresa.objects.create(nome_fantasia_da_empresa=company_name, endereço_da_empresa=company_adress, número_de_telefone_da_empresa=company_number)
                 customer.save()
                 if User.objects.filter(username=username):
                     messages.error(request, 'Usuário já em uso!')
                     return redirect('register')
                 else:
-                    user = User.objects.create_user(username=username, email=company_email, password=password, first_name=employee.split(' ')[0], last_name=employee.split(' ')[-1])
+                    user = User.objects.create_user(username=username, email=employee_email, password=password, first_name=employee.split(' ')[0], last_name=employee.split(' ')[-1])
                     user.save()
-                    worker = Representante.objects.create(empresa=customer, nome_do_representante_legal=employee, rg_do_representante_legal=employee_id, cpf_do_representante_legal=employee_nif, cargo_do_representante_legal=employee_position, username=user)
+                    worker = Representante.objects.create(empresa=customer, nome_do_representante_legal=employee, rg_do_representante_legal=employee_id, cpf_do_representante_legal=employee_nif, cargo_do_representante_legal=employee_position, username=user, email_do_representante_legal=employee_email)
                     worker.save()
                     messages.success(request, 'Conta criada, faça login na plataforma com o usuário e senha cadastrados!')
                     return redirect('login')
@@ -97,10 +97,10 @@ def register(request):
                     messages.error(request, 'Usuário já em uso!')
                     return redirect('register')
                 else:
-                    user = User.objects.create_user(username=username, email=company_email, password=password, first_name=employee.split(' ')[0], last_name=employee.split(' ')[-1])
+                    user = User.objects.create_user(username=username, email=employee_email, password=password, first_name=employee.split(' ')[0], last_name=employee.split(' ')[-1])
                     user.save()
                     customer = Empresa.objects.get(nome_fantasia_da_empresa=company_name)
-                    worker = Representante.objects.create(empresa=customer, nome_do_representante_legal=employee, rg_do_representante_legal=employee_id, cpf_do_representante_legal=employee_nif, cargo_do_representante_legal=employee_position, username=user)
+                    worker = Representante.objects.create(empresa=customer, nome_do_representante_legal=employee, rg_do_representante_legal=employee_id, cpf_do_representante_legal=employee_nif, cargo_do_representante_legal=employee_position, username=user, email_do_representante_legal=employee_email)
                     worker.save()
                     messages.success(request, 'Conta criada, faça login na plataforma com o usuário e senha cadastrados!')
                     return redirect('login')
