@@ -33,7 +33,9 @@ DEBUG = os.getenv('DEBUG')
 
 ALLOWED_HOSTS = [
     'localhost',
-    'django'
+    'django',
+    'prosesmtsegurancasotrabalho.com',
+    'www.prosesmtsegurancasotrabalho.com',
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
