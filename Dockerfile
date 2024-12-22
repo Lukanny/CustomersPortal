@@ -1,20 +1,25 @@
-FROM python:3.12
+FROM python:3.12-slim
 
-# Upgrade pip
-RUN pip install --upgrade pip
-
-# Set work directory
 WORKDIR /app
 
-# Copy and install dependencies separately for better caching
-COPY ./requirements.txt .
-RUN pip install -r requirements.txt
+# Instala dependências do sistema
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libpq-dev \
+    default-libmysqlclient-dev \
+    && apt-get clean
 
-# Copy the rest of the application code
+# Instala dependências Python
+COPY requirements.txt .
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copia os arquivos do projeto
 COPY . .
 
-# Make entrypoint executable
-COPY ./entrypoint.sh /
-RUN chmod +x /entrypoint.sh
+# Permissões para o entrypoint
+RUN chmod +x entrypoint.sh
 
-ENTRYPOINT ["sh", "/entrypoint.sh"]
+EXPOSE 8000
+
+ENTRYPOINT ["sh", "./entrypoint.sh"]

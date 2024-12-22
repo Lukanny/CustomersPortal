@@ -1,40 +1,60 @@
 services:
+  # Serviço Django com Gunicorn
   django_gunicorn:
     build:
       context: .
     volumes:
-      - static:/app/static
+      - static:/app/static  # Armazena arquivos estáticos coletados
     env_file: 
       - .env
-    ports:
-      - '8000:8000'
+    expose:
+      - 8000
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
       - app_network
+    command: >
+      gunicorn core.wsgi:application --bind 0.0.0.0:8000 --workers 3 --threads 2
 
+  # Serviço Nginx
   nginx:
-    build: ./nginx
+    build:
+      context: .
+      dockerfile: ./nginx/Dockerfile
     volumes:
-      - static:/static
+      - static:/app/static  # Nginx acessa arquivos estáticos
     ports:
       - "80:80"
+      - "443:443"
     depends_on:
       - django_gunicorn
     networks:
       - app_network
 
+  # Serviço MySQL
   db:
     image: mysql:8.0
     volumes:
       - mysql_data:/var/lib/mysql
     env_file: 
       - .env
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     networks:
       - app_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   static:
+  media:
   mysql_data:
 
 networks:
