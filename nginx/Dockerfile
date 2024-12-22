@@ -5,10 +5,8 @@ FROM nginx:latest
 RUN rm /etc/nginx/conf.d/default.conf
 
 # Copiar a configuração personalizada do Nginx
-COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY ./default.conf /etc/nginx/conf.d/default.conf
 
-# Copiar arquivos estáticos e de mídia do Django (opcional, pode ser montado como volume)
-COPY ./static /app/static
 
 # (Opcional) Copiar certificados SSL
 # COPY ./nginx/ssl /etc/nginx/ssl
