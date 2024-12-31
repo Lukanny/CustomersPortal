@@ -1,27 +1,28 @@
 FROM python:3.12-slim
 
+# Set working directory
 WORKDIR /app
 
-# Instala dependências do sistema
+# Install dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \
     libpq-dev \
     default-libmysqlclient-dev \
     && apt-get clean
 
-# Instala dependências Python
 COPY requirements.txt .
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copia os arquivos do projeto
+# Copy project files
 COPY . .
 
-RUN python manage.py collectstatic --noinput --verbosity 3
+# Create the static folder explicitly
+RUN mkdir -p /app/static
 
-# Permissões para o entrypoint
-RUN chmod +x entrypoint.sh
+# Collect static files into /app/static
+RUN python manage.py collectstatic --noinput --verbosity 3
 
 EXPOSE 8000
 
-ENTRYPOINT ["sh", "./entrypoint.sh"]
+CMD ["gunicorn", "--workers", "4", "--bind", "0.0.0.0:8000", "core.wsgi:application"]
