@@ -29,13 +29,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG')
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'localhost',
-    'django',
-    'prosesmtsegurancasotrabalho.com',
-    'www.prosesmtsegurancasotrabalho.com',
+    'django_gunicorn',
+    '127.0.0.1',
+    'prosesmtsegurancadotrabalho.com',
+    'www.prosesmtsegurancadotrabalho.com',
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -143,8 +144,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_ROOT = '/static'
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')  # Collect static into /app/static
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'core/static')]
 
 

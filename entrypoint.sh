@@ -6,8 +6,9 @@ done
 
 echo "Banco de dados disponível!"
 
-python manage.py migrate --noinput
+# Collect static files into /app/static
+python manage.py collectstatic --noinput --verbosity 2
 
-python manage.py collectstatic --noinput
+python manage.py migrate --noinput
 
 exec gunicorn --workers 4 --bind 0.0.0.0:8000 core.wsgi:application

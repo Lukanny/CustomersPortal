@@ -1,24 +1,21 @@
 FROM python:3.12-slim
 
+# Set working directory
 WORKDIR /app
 
-# Instala dependências do sistema
+# Install dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \
     libpq-dev \
     default-libmysqlclient-dev \
     && apt-get clean
 
-# Instala dependências Python
 COPY requirements.txt .
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copia os arquivos do projeto
+# Copy project files
 COPY . .
-
-# Permissões para o entrypoint
-RUN chmod +x entrypoint.sh
 
 EXPOSE 8000
 
