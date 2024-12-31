@@ -24,7 +24,7 @@ services:
       context: ./nginx
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
-      - static:/app/static
+      - static:/app/staticfiles  # Ajuste para staticfiles
       - media:/app/media
       - /etc/letsencrypt/live/prosesmtsegurancadotrabalho.com/fullchain.pem:/etc/letsencrypt/live/prosesmtsegurancadotrabalho.com/fullchain.pem
       - /etc/letsencrypt/live/prosesmtsegurancadotrabalho.com/privkey.pem:/etc/letsencrypt/live/prosesmtsegurancadotrabalho.com/privkey.pem
