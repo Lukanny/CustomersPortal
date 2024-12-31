@@ -29,13 +29,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG')
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'localhost',
     'django',
-    'prosesmtsegurancasotrabalho.com',
-    'www.prosesmtsegurancasotrabalho.com',
+    'prosesmtsegurancadotrabalho.com',
+    'www.prosesmtsegurancadotrabalho.com',
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
