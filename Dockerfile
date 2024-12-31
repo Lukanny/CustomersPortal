@@ -17,12 +17,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy project files
 COPY . .
 
-# Create the static folder explicitly
-RUN mkdir -p /app/static
-
-# Collect static files into /app/static
-RUN python manage.py collectstatic --noinput --verbosity 3
-
 EXPOSE 8000
 
-CMD ["gunicorn", "--workers", "4", "--bind", "0.0.0.0:8000", "core.wsgi:application"]
+ENTRYPOINT ["sh", "./entrypoint.sh"]
