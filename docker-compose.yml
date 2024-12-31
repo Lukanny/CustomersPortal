@@ -1,11 +1,10 @@
 services:
-  # Serviço Django com Gunicorn
   django_gunicorn:
     build:
       context: .
     volumes:
-      - static:/app/static  # Armazena arquivos estáticos coletados
-      - media:/app/media    # Armazena arquivos de mídia (opcional)
+      - static:/app/static  
+      - media:/app/media    
     env_file: 
       - .env
     expose:
@@ -24,7 +23,7 @@ services:
       context: ./nginx
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
-      - static:/app/static  # Ajuste para staticfiles
+      - static:/app/static 
       - media:/app/media
       - /etc/letsencrypt/live/prosesmtsegurancadotrabalho.com/fullchain.pem:/etc/letsencrypt/live/prosesmtsegurancadotrabalho.com/fullchain.pem
       - /etc/letsencrypt/live/prosesmtsegurancadotrabalho.com/privkey.pem:/etc/letsencrypt/live/prosesmtsegurancadotrabalho.com/privkey.pem
