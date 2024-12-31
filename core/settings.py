@@ -33,7 +33,8 @@ DEBUG = False
 
 ALLOWED_HOSTS = [
     'localhost',
-    'django',
+    'django_gunicorn',
+    '127.0.0.1',
     'prosesmtsegurancadotrabalho.com',
     'www.prosesmtsegurancadotrabalho.com',
 ]
