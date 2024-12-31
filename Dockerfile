@@ -17,6 +17,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copia os arquivos do projeto
 COPY . .
 
+RUN python manage.py collectstatic --noinput --verbosity 3
+
 # Permissões para o entrypoint
 RUN chmod +x entrypoint.sh
 

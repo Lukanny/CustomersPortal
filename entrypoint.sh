@@ -8,6 +8,4 @@ echo "Banco de dados disponível!"
 
 python manage.py migrate --noinput
 
-python manage.py collectstatic --noinput
-
 exec gunicorn --workers 4 --bind 0.0.0.0:8000 core.wsgi:application
