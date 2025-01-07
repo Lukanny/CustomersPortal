@@ -15,9 +15,21 @@ services:
     networks:
       - app_network
     command: >
-      gunicorn core.wsgi:application --bind 0.0.0.0:8000 --workers 3 --threads 2
+      gunicorn core.wsgi:application --bind 0.0.0.0:8000 --workers 2 --threads 2 --timeout 30 --max-requests 1000 --log-level info
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "512M"
+        reservations:
+          cpus: "0.25"
+          memory: "256M"
 
-  # Serviço Nginx
   nginx:
     build:
       context: ./nginx
@@ -25,10 +37,6 @@ services:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
       - static:/app/static 
       - media:/media
-      - /etc/letsencrypt/live/prosesmtsegurancadotrabalho.com/fullchain.pem:/etc/letsencrypt/live/prosesmtsegurancadotrabalho.com/fullchain.pem
-      - /etc/letsencrypt/live/prosesmtsegurancadotrabalho.com/privkey.pem:/etc/letsencrypt/live/prosesmtsegurancadotrabalho.com/privkey.pem
-      - /etc/letsencrypt/options-ssl-nginx.conf:/etc/letsencrypt/options-ssl-nginx.conf
-      - /etc/letsencrypt/ssl-dhparams.pem:/etc/letsencrypt/ssl-dhparams.pem
     ports:
       - "80:80"
       - "443:443"
@@ -37,7 +45,6 @@ services:
     networks:
       - app_network
 
-  # Serviço MySQL
   db:
     image: mysql:8.0
     volumes:
@@ -56,6 +63,14 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "512M"
+        reservations:
+          cpus: "0.25"
+          memory: "256M"
 
 volumes:
   static:
