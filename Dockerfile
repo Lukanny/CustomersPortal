@@ -15,9 +15,6 @@ RUN pip install --upgrade pip && \
 
 COPY . .
 
-RUN useradd -m django_user
-USER django_user
-
 EXPOSE 8000
 
 ENTRYPOINT ["sh", "./entrypoint.sh"]

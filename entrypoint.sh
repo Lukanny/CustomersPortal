@@ -8,11 +8,6 @@ done
 
 echo "Database is ready!"
 
-# Adjust ownership of static files
-echo "Adjusting static files permissions..."
-chown -R django_user:django_user /app/static
-chmod -R 755 /app/static
-
 # Collect static files
 echo "Collecting static files..."
 python manage.py collectstatic --noinput --verbosity 2
