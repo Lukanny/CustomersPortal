@@ -53,12 +53,12 @@ def custom_logout(request):
 def register(request):
     if request.method == "POST":
         employee = request.POST['empregado_nome']
-        employee_id = request.POST['empregado_rg']
         employee_nif = request.POST['empregado_cpf']
         employee_position = request.POST['empregado_cargo']
         employee_email = request.POST['email_funcionario']
         confirm_employee_email = request.POST['email_funcionario2']
         company_name = request.POST['nome_empresa']
+        company_nif = request.POST['cnpj_empresa']
         company_adress = request.POST['endereco_empresa']
         company_number = request.POST['telefone_empresa']
         username = request.POST['usuario']
@@ -80,7 +80,7 @@ def register(request):
 
 
         if not Empresa.objects.filter(nome_fantasia_da_empresa=company_name):
-                customer = Empresa.objects.create(nome_fantasia_da_empresa=company_name, endereço_da_empresa=company_adress, número_de_telefone_da_empresa=company_number)
+                customer = Empresa.objects.create(nome_fantasia_da_empresa=company_name, endereço_da_empresa=company_adress, número_de_telefone_da_empresa=company_number, cnpj_da_empresa=company_nif)
                 customer.save()
                 if User.objects.filter(username=username):
                     messages.error(request, 'Usuário já em uso!')
@@ -88,7 +88,7 @@ def register(request):
                 else:
                     user = User.objects.create_user(username=username, email=employee_email, password=password, first_name=employee.split(' ')[0], last_name=employee.split(' ')[-1])
                     user.save()
-                    worker = Representante.objects.create(empresa=customer, nome_do_representante_legal=employee, rg_do_representante_legal=employee_id, cpf_do_representante_legal=employee_nif, cargo_do_representante_legal=employee_position, username=user, email_do_representante_legal=employee_email)
+                    worker = Representante.objects.create(empresa=customer, nome_do_representante_legal=employee, cpf_do_representante_legal=employee_nif, cargo_do_representante_legal=employee_position, username=user, email_do_representante_legal=employee_email)
                     worker.save()
                     messages.success(request, 'Conta criada, faça login na plataforma com o usuário e senha cadastrados!')
                     return redirect('login')
@@ -100,7 +100,7 @@ def register(request):
                     user = User.objects.create_user(username=username, email=employee_email, password=password, first_name=employee.split(' ')[0], last_name=employee.split(' ')[-1])
                     user.save()
                     customer = Empresa.objects.get(nome_fantasia_da_empresa=company_name)
-                    worker = Representante.objects.create(empresa=customer, nome_do_representante_legal=employee, rg_do_representante_legal=employee_id, cpf_do_representante_legal=employee_nif, cargo_do_representante_legal=employee_position, username=user, email_do_representante_legal=employee_email)
+                    worker = Representante.objects.create(empresa=customer, nome_do_representante_legal=employee, cpf_do_representante_legal=employee_nif, cargo_do_representante_legal=employee_position, username=user, email_do_representante_legal=employee_email)
                     worker.save()
                     messages.success(request, 'Conta criada, faça login na plataforma com o usuário e senha cadastrados!')
                     return redirect('login')

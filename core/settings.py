@@ -71,7 +71,17 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
-CORS_ORIGIN_ALLOW_ALL = True
+CSRF_TRUSTED_ORIGINS = [
+    'https://prosesmtsegurancasotrabalho.com',
+    'https://www.prosesmtsegurancasotrabalho.com',
+]
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+CSRF_COOKIE_SECURE = True 
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_HTTPONLY = False 
+SESSION_COOKIE_HTTPONLY = True  
 
 ROOT_URLCONF = 'core.urls'
 
