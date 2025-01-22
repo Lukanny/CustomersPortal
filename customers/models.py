@@ -1,3 +1,4 @@
+from tkinter import N
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
@@ -33,7 +34,7 @@ class Representante(models.Model):
 
     @property
     def cnpj_da_empresa(self):
-        return self.empresa.cnpj_da_empresa
+        return self.empresa.cnpj_da_empresa if self.empresa else None
 
     def save(self, *args, **kwargs):
         if not self.pk:
