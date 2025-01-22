@@ -31,6 +31,10 @@ class Representante(models.Model):
     empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE, related_name='workers')
     username = models.OneToOneField(User, on_delete=models.CASCADE)
 
+    @property
+    def cnpj_da_empresa(self):
+        return self.empresa.cnpj_da_empresa
+
     def save(self, *args, **kwargs):
         if not self.pk:
             self.data_de_registro_do_representante = timezone.now()
