@@ -63,3 +63,53 @@ img {
     max-width: 100%;
     height: auto;
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+/* Base styling */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+/* Card styling */
+.card {
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.card-header {
+    font-weight: 600;
+    font-size: 1.25rem;
+    padding: 1rem;
+}
+
+form {
+    font-size: 1rem;
+}
+
+form .btn-primary {
+    font-weight: 500;
+    border-radius: 5px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .card-header {
+        text-align: center;
+        font-size: 1rem;
+    }
+
+    form {
+        font-size: 0.9rem;
+    }
+
+    form .btn-primary {
+        font-size: 0.9rem;
+    }
+}
+
