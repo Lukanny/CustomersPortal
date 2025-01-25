@@ -1,69 +1,31 @@
-{% extends "partials/sidebar.html" %}
+{% extends "sidebar.html" %}
+
+{% block title %}
+Dashboard - PROSESMT
+{% endblock %}
+
 {% block content %}
 <div class="container mt-5">
-    <div class="row my-5">
-        <div class="col-12">
-            <div class="card flex-fill border-0 illustration">
-                <div class="card-body p-0 d-flex flex-fill">
-                    <div class="row g-0 w-100">
-                        <div class="col-md-6">
-                            <div class="p-3">
-                                <h4>Bem-vindo, {{ worker.nome_do_representante_legal }}</h4>
-                                <p class="mb-0">Dashboard Administrativo, {{ worker.empresa }}</p>
-                            </div>
-                        </div>
-                        <div class="col-md-6 text-end align-self-center">
-                            <img src="{% static 'img/customer-support.jpg' %}" class="img-fluid illustration-img" alt="Ilustração">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-12">
-            <h5 class="text-dark">Arquivos Disponíveis</h5>
-            <table id="fileTable" class="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>Nome do Arquivo</th>
-                        <th>Ano do Documento</th>
-                        <th>Data de Disponibilização</th>
-                        <th>Download</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% if files %}
-                        {% for file in files %}
-                            <tr>
-                                <td>{{ file.nome_do_arquivo }}</td>
-                                <td>{{ file.ano_do_arquivo }}</td>
-                                <td>{{ file.data_de_upload_do_arquivo }}</td>
-                                <td><a href="{{ file.endereço_do_arquivo.url }}" class="btn btn-success btn-sm" download>Baixar</a></td>
-                            </tr>
-                        {% endfor %}
-                    {% else %}
-                        <tr>
-                            <td colspan="4" class="text-center">Nenhum arquivo disponível no momento.</td>
-                        </tr>
-                    {% endif %}
-                </tbody>
-            </table>
-        </div>
-    </div>
+    <h1>Bem-vindo ao Dashboard</h1>
+    <table id="fileTable" class="table table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>Nome do Arquivo</th>
+                <th>Ano do Documento</th>
+                <th>Data de Disponibilização</th>
+                <th>Download</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for file in files %}
+            <tr>
+                <td>{{ file.nome_do_arquivo }}</td>
+                <td>{{ file.ano_do_arquivo }}</td>
+                <td>{{ file.data_de_upload_do_arquivo }}</td>
+                <td><a href="{{ file.endereço_do_arquivo.url }}" download>Download</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
-
-<script>
-    $(document).ready(function() {
-        $('#fileTable').DataTable({
-            paging: true,
-            searching: true,
-            ordering: true,
-            language: {
-                url: "https://cdn.datatables.net/plug-ins/2.0.8/i18n/pt-BR.json",
-            }
-        });
-    });
-</script>
 {% endblock %}

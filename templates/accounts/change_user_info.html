@@ -1,45 +1,18 @@
-{% extends "partials/sidebar.html" %}
+{% extends "sidebar.html" %}
+
+{% block title %}
+Alterar Dados - PROSESMT
+{% endblock %}
+
 {% block content %}
 <div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card border-0 shadow-lg p-4">
-                <h3 class="text-center text-dark">Meus Dados</h3>
-                <hr>
-                <!-- Alerts -->
-                {% include 'partials/_alert.html' %}
-                <form action="{% url 'edit' %}" method="POST">
-                    {% csrf_token %}
-                    <div class="form-group mb-3">
-                        <label for="nome">Nome Completo</label>
-                        <input type="text" id="nome" value="{{ worker.nome_do_representante_legal }}" class="form-control bg-secondary text-white" readonly>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="cpf">CPF</label>
-                        <input type="text" id="cpf" value="{{ worker.cpf_do_representante_legal }}" class="form-control bg-secondary text-white" readonly>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="email">E-mail Administrativo</label>
-                        <input type="email" id="email" name="email_do_representante_legal" value="{{ worker.email_do_representante_legal }}" class="form-control">
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="cargo">Cargo Atual</label>
-                        <input type="text" id="cargo" value="{{ worker.cargo_do_representante_legal }}" class="form-control bg-secondary text-white" readonly>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="empresa">Nome da Empresa</label>
-                        <input type="text" id="empresa" value="{{ worker.empresa.nome_fantasia_da_empresa }}" class="form-control bg-secondary text-white" readonly>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="cnpj">CNPJ da Empresa</label>
-                        <input type="text" id="cnpj" value="{{ worker.empresa.cnpj_da_empresa }}" class="form-control bg-secondary text-white" readonly>
-                    </div>
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-primary btn-lg">Salvar Alterações</button>
-                    </div>
-                </form>
-            </div>
+    <h2 class="text-center">Alterar Informações</h2>
+    <form action="{% url 'edit' %}" method="POST" class="mt-4">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="d-grid">
+            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
         </div>
-    </div>
+    </form>
 </div>
 {% endblock %}
