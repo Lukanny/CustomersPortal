@@ -1,4 +1,3 @@
-{% load static %}
     <!-- Botão para dispositivos móveis -->
     <button class="btn btn-primary d-md-none mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar" aria-expanded="false" aria-controls="sidebar">
         Menu
@@ -8,7 +7,7 @@
     <aside id="sidebar" class="collapse d-md-block">
         <div class="h-100">
             <!-- Logo da Sidebar -->
-            <div class="sidebar-logo text-center">
+            <div class="sidebar-logo">
                 <h3>PROSESMT</h3>
             </div>
 
@@ -17,14 +16,14 @@
                 <!-- Dashboard -->
                 <li class="sidebar-item">
                     <a href="{% url 'dashboard' %}" class="sidebar-link">
-                        <i class="fa-solid fa-list pe-2"></i> Dashboard
+                        <i class="fa-solid fa-list"></i> Dashboard
                     </a>
                 </li>
 
                 <!-- Minha Conta -->
                 <li class="sidebar-item">
                     <a href="#" class="sidebar-link collapsed" data-bs-target="#menu-minha-conta" data-bs-toggle="collapse" aria-expanded="false">
-                        <i class="fa-regular fa-user pe-2"></i> Minha Conta
+                        <i class="fa-regular fa-user"></i> Minha Conta
                     </a>
                     <ul id="menu-minha-conta" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
@@ -36,28 +35,28 @@
                 <!-- Fale Conosco -->
                 <li class="sidebar-item">
                     <a href="#" class="sidebar-link collapsed" data-bs-target="#menu-fale-conosco" data-bs-toggle="collapse" aria-expanded="false">
-                        <i class="fa-solid fa-headset pe-2"></i> Fale Conosco
+                        <i class="fa-solid fa-headset"></i> Fale Conosco
                     </a>
                     <ul id="menu-fale-conosco" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
                             <a href="https://wa.me/559282559465?text=Ol%C3%A1!%20Preciso%20de%20suporte%20com%20o%20portal%20do%20cliente." class="sidebar-link">
-                                <i class="fa-solid fa-headset pe-2"></i> WhatsApp
+                                <i class="fa-solid fa-headset"></i> WhatsApp
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a href="mailto:contato@empresa.com?subject=Informa%C3%A7%C3%B5es%20sobre%20nossos%20servi%C3%A7os&body=Ol%C3%A1%2C%0A%0AGostaria%20de%20saber%20mais%20sobre%20os%20servi%C3%A7os%20oferecidos%20pela%20empresa.%0A%0AAtenciosamente%2C%0A[Seu%20Nome]" class="sidebar-link" target="_blank">
-                                <i class="fa-regular fa-envelope pe-2"></i> Enviar Email
+                                <i class="fa-regular fa-envelope"></i> Enviar Email
                             </a>
                         </li>
                     </ul>
                 </li>
-
-                <!-- Logout -->
-                <li class="sidebar-item">
-                    <a href="{% url 'logout' %}" class="sidebar-link">
-                        <i class="fa-solid fa-arrow-left pe-2"></i> Sair
-                    </a>
-                </li>
             </ul>
+
+            <!-- Logout -->
+            <div class="logout">
+                <a href="{% url 'logout' %}" class="sidebar-link">
+                    <i class="fa-solid fa-arrow-left"></i> Sair
+                </a>
+            </div>
         </div>
     </aside>
