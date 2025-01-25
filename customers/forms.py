@@ -30,8 +30,8 @@ class RepresentanteForm(forms.ModelForm):
             'cpf_do_representante_legal',
             'cargo_do_representante_legal',
             'email_do_representante_legal',
+            'nome_fantasia_da_empresa',
             'cnpj_da_empresa',
-            'nome_fantasia_da_empresa'
         ]
 
     def __init__(self, *args, **kwargs) -> None:
@@ -40,8 +40,8 @@ class RepresentanteForm(forms.ModelForm):
         readonly_fields = [
             'nome_do_representante_legal',
             'cpf_do_representante_legal',
+            'nome_fantasia_da_empresa',
             'cnpj_da_empresa',
-            'nome_fantasia_da_empresa'
         ]
 
         for field in readonly_fields:
