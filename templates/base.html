@@ -16,17 +16,18 @@
     <!-- Sidebar CSS -->
     <link href="{% static 'css/pages/sidebar.css' %}" rel="stylesheet">
 
-    <!-- Custom CSS -->
+    <!-- Página Específica - CSS -->
     {% block styles %}
     {% endblock %}
 </head>
 <body>
     <div class="wrapper">
-        <!-- Sidebar Placeholder -->
+        <!-- Sidebar -->
         {% block sidebar %}
+        {% include 'partials/sidebar.html' %}
         {% endblock %}
 
-        <!-- Main Content Placeholder -->
+        <!-- Conteúdo Principal -->
         <div class="main-content">
             {% block content %}
             {% endblock %}
@@ -36,7 +37,7 @@
     <!-- Bootstrap JS -->
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 
-    <!-- Custom JS -->
+    <!-- Página Específica - JS -->
     {% block scripts %}
     {% endblock %}
 </body>

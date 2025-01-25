@@ -1,31 +1,92 @@
-{% extends "sidebar.html" %}
+{% extends "base.html" %}
 
 {% block title %}
 Dashboard - PROSESMT
 {% endblock %}
 
+{% block styles %}
+<!-- CSS específico para o dashboard -->
+<link href="{% static 'css/pages/dashboard.css' %}" rel="stylesheet">
+<!-- DataTables CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+{% endblock %}
+
+{% block sidebar %}
+{% include "partials/sidebar.html" %}
+{% endblock %}
+
 {% block content %}
-<div class="container mt-5">
-    <h1>Bem-vindo ao Dashboard</h1>
-    <table id="fileTable" class="table table-striped" style="width:100%">
-        <thead>
-            <tr>
-                <th>Nome do Arquivo</th>
-                <th>Ano do Documento</th>
-                <th>Data de Disponibilização</th>
-                <th>Download</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for file in files %}
-            <tr>
-                <td>{{ file.nome_do_arquivo }}</td>
-                <td>{{ file.ano_do_arquivo }}</td>
-                <td>{{ file.data_de_upload_do_arquivo }}</td>
-                <td><a href="{{ file.endereço_do_arquivo.url }}" download>Download</a></td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<div class="container-fluid mt-4">
+    <!-- Boas-vindas -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card border-0 shadow">
+                <div class="card-body d-flex align-items-center justify-content-between">
+                    <div>
+                        <h4>Bem-vindo, {{ worker.nome_do_representante_legal }}</h4>
+                        <p class="text-muted mb-0">Dashboard Administrativo - {{ worker.empresa }}</p>
+                    </div>
+                    <img src="{% static 'img/customer-support.jpg' %}" alt="Dashboard" class="img-fluid" style="max-height: 120px;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabela de Arquivos -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card border-0 shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Arquivos Disponíveis</h5>
+                    <table id="fileTable" class="table table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Nome do Arquivo</th>
+                                <th>Ano do Documento</th>
+                                <th>Data de Disponibilização</th>
+                                <th>Download</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if files %}
+                                {% for file in files %}
+                                <tr>
+                                    <td>{{ file.nome_do_arquivo }}</td>
+                                    <td>{{ file.ano_do_arquivo }}</td>
+                                    <td>{{ file.data_de_upload_do_arquivo }}</td>
+                                    <td>
+                                        <a href="{{ file.endereço_do_arquivo.url }}" download class="btn btn-primary btn-sm">Download</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="4" class="text-center">Nenhum arquivo disponível</td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#fileTable').DataTable({
+            "paging": true,
+            "searching": true,
+            "ordering": true,
+            "order": [[1, 'asc']],
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/2.0.8/i18n/pt-BR.json",
+            }
+        });
+    });
+</script>
 {% endblock %}
