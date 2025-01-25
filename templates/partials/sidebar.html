@@ -22,9 +22,23 @@
                         <a href="{% url 'edit' %}" class="sidebar-link">Minhas Informações</a>
                     </li>
                 </ul>
-                <a href="https://wa.me/559282559465?text=Olá! Preciso de suporte com o portal do cliente." class="sidebar-link" aria-expanded="false"><i class="fa-solid fa-headset pe-2"></i>
+                <a href="#" class="sidebar-link collapsed" data-bs-target="#auth" data-bs-toggle="collapse"
+                    aria-expanded="false"><i class="fa-regular fa-user pe-2"></i>
                     Fale Conosco
                 </a>
+                <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                    <li class="sidebar-item">
+                        <a href="https://wa.me/559282559465?text=Olá! Preciso de suporte com o portal do cliente." class="sidebar-link" aria-expanded="false"><i class="fa-solid fa-headset pe-2"></i>
+                            WhatsApp
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="mailto:contato@empresa.com?subject=Informações%20sobre%20nossos%20serviços&body=Olá%2C%0A%0AGostaria%20de%20saber%20mais%20sobre%20os%20serviços%20oferecidos%20pela%20empresa.%0A%0AAtenciosamente%2C%0A[Seu%20Nome]" target="_blank">
+                            Enviar Email
+                        </a>
+                    </li>
+                </ul>
+
             </li>
         </ul>
         <a href="{% url 'logout' %}" class="sidebar-link" aria-expanded="false"><i class="fa-solid fa-arrow-left pe-2"></i>
