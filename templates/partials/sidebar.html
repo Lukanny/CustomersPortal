@@ -3,9 +3,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PROSESMT - Portal do Cliente</title>
 
     <!-- Bootstrap CSS -->
@@ -17,7 +15,7 @@
 </head>
 <body>
     <!-- Botão para dispositivos móveis -->
-    <button class="btn btn-primary d-md-none mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar" aria-expanded="false" aria-controls="sidebar">
+    <button id="sidebar-toggle" class="btn btn-primary d-md-none mb-3" type="button">
         Menu
     </button>
 
@@ -71,5 +69,7 @@
 
     <!-- Bootstrap JS -->
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <!-- Custom JS -->
+    <script src="{% static 'js/sidebar.js' %}"></script>
 </body>
 </html>
