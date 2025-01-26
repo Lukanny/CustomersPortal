@@ -1,23 +1,26 @@
 {% load static %}
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>PROSESMT - Portal do Cliente</title>
+    <title>{% block title %}Portal do Cliente - PROSESMT{% endblock %}</title>
 
-    <!--Bootstrap CSS-->
+    <!-- Bootstrap CSS -->
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-
-    <!--Login page CSS-->
-    <link href="{% static 'css/pages/login.css' %}" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom Styles -->
+    {% block styles %}{% endblock %}
 </head>
 <body>
-    {% block content %} {% endblock %}
+    <div class="wrapper">
+        {% block content %}{% endblock %}
+    </div>
 
-    <!--Bootstrap JS-->
-    <script src="{%static 'js/bootstrap.bundle.min.js' %}"></script>
+    <!-- Bootstrap JS -->
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    {% block scripts %}{% endblock %}
 </body>
 </html>

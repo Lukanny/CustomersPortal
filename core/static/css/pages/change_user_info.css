@@ -24,7 +24,7 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     background-color: white;
-    margin-bottom: 20px;
+    margin-top: 30px;
     padding: 20px;
 }
 
@@ -41,55 +41,40 @@ body {
     padding: 15px;
 }
 
-/* Table styling */
-#fileTable {
-    width: 100%;
+/* Form styling */
+form {
+    font-size: 1rem;
+}
+
+form input, form select {
     border-radius: 8px;
-    overflow: hidden;
-    border-collapse: separate;
+    padding: 10px;
+    font-size: 1rem;
+    margin-bottom: 15px;
+    width: 100%;
+    border: 1px solid #ccc;
 }
 
-#fileTable thead th {
+form button {
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 1rem;
+    font-weight: bold;
     background-color: #09112d;
     color: white;
-    text-align: center;
-    padding: 10px;
+    border: none;
+    width: 100%;
 }
 
-#fileTable tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
+form button:hover {
+    background-color: #0a1c3f;
 }
 
-#fileTable tbody tr:hover {
-    background-color: #f2f2f2;
-}
-
-#fileTable tbody td {
-    text-align: center;
-    padding: 10px;
-}
-
-#fileTable .btn-primary {
-    font-size: 0.9rem;
-}
-
-/* DataTables custom styling */
-.dataTables_wrapper .dataTables_filter input {
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    padding: 5px;
-}
-
-.dataTables_wrapper .dataTables_paginate .paginate_button {
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    padding: 5px 10px;
-    background: #e9ecef;
-}
-
-.dataTables_wrapper .dataTables_paginate .paginate_button.current {
-    background-color: #09112d;
+/* Readonly fields */
+input[readonly] {
+    background-color: #343a40;
     color: white;
+    cursor: not-allowed;
 }
 
 /* Responsive adjustments */
@@ -100,7 +85,11 @@ body {
         width: 100%;
     }
 
-    #fileTable {
+    form input, form select {
+        font-size: 0.9rem;
+    }
+
+    form button {
         font-size: 0.9rem;
     }
 }
