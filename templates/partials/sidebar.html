@@ -1,34 +1,80 @@
 {% load static %}
-<aside id="sidebar" class="js-sidebar">
-    <!-- Content For Sidebar -->
-    <div class="h-100">
-        <div class="sidebar-logo text-center">
-            <h3>PROSESMT</h3>
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PROSESMT - Portal do Cliente</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- FontAwesome CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Sidebar CSS -->
+    <link href="{% static 'css/sidebar.css' %}" rel="stylesheet">
+</head>
+<body>
+    <!-- Botão para dispositivos móveis -->
+    <button class="btn btn-primary d-md-none mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar" aria-expanded="false" aria-controls="sidebar">
+        Menu
+    </button>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="collapse d-md-block">
+        <div class="h-100">
+            <div class="sidebar-logo text-center">
+                <h3>PROSESMT</h3>
+            </div>
+            <ul class="sidebar-nav">
+                <li class="sidebar-item">
+                    <a href="{% url 'dashboard' %}" class="sidebar-link">
+                        <i class="fa-solid fa-list"></i> Dashboard
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link collapsed" data-bs-target="#menu-minha-conta" data-bs-toggle="collapse" aria-expanded="false">
+                        <i class="fa-regular fa-user"></i> Minha Conta
+                    </a>
+                    <ul id="menu-minha-conta" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="{% url 'edit' %}" class="sidebar-link">Minhas Informações</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link collapsed" data-bs-target="#menu-fale-conosco" data-bs-toggle="collapse" aria-expanded="false">
+                        <i class="fa-solid fa-headset"></i> Fale Conosco
+                    </a>
+                    <ul id="menu-fale-conosco" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="https://wa.me/559282559465?text=Ol%C3%A1!%20Preciso%20de%20suporte%20com%20o%20portal%20do%20cliente." class="sidebar-link">
+                                <i class="fa-solid fa-headset"></i> WhatsApp
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="mailto:contato@empresa.com?subject=Informa%C3%A7%C3%B5es%20sobre%20nossos%20servi%C3%A7os&body=Ol%C3%A1%2C%0A%0AGostaria%20de%20saber%20mais%20sobre%20os%20servi%C3%A7os%20oferecidos%20pela%20empresa.%0A%0AAtenciosamente%2C%0A[Seu%20Nome]" class="sidebar-link" target="_blank">
+                                <i class="fa-regular fa-envelope"></i> Enviar Email
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="logout text-center mt-4">
+                <a href="{% url 'logout' %}" class="btn btn-danger w-75">
+                    <i class="fa-solid fa-arrow-left"></i> Sair
+                </a>
+            </div>
         </div>
-        <ul class="sidebar-nav">
-            <li class="sidebar-item">
-                <a href="{% url 'dashboard' %}" class="sidebar-link">
-                    <i class="fa-solid fa-list pe-2"></i>
-                    Dashboard
-                </a>
-            </li>
-            <li class="sidebar-item">
-                <a href="#" class="sidebar-link collapsed" data-bs-target="#auth" data-bs-toggle="collapse"
-                    aria-expanded="false"><i class="fa-regular fa-user pe-2"></i>
-                    Minha Conta
-                </a>
-                <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                    <li class="sidebar-item">
-                        <a href="{% url 'edit' %}" class="sidebar-link">Minhas Informações</a>
-                    </li>
-                </ul>
-                <a href="https://wa.me/559282559465?text=Olá! Preciso de suporte com o portal do cliente." class="sidebar-link" aria-expanded="false"><i class="fa-solid fa-headset pe-2"></i>
-                    Fale Conosco
-                </a>
-            </li>
-        </ul>
-        <a href="{% url 'logout' %}" class="sidebar-link" aria-expanded="false"><i class="fa-solid fa-arrow-left pe-2"></i>
-            Sair
-        </a>
+    </aside>
+
+    <!-- Conteúdo Principal -->
+    <div class="container" style="margin-left: 220px; padding-top: 20px;">
+        {% block content %} {% endblock %}
     </div>
-</aside>
+
+    <!-- Bootstrap JS -->
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
