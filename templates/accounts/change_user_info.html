@@ -1,35 +1,29 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% load static %}
 
-{% block title %}
-Alterar Informações - PROSESMT
-{% endblock %}
-
-{% block styles %}
-<!-- CSS específico para o formulário de alterar informações -->
-<link href="{% static 'css/pages/change_user_info.css' %}" rel="stylesheet">
-{% endblock %}
+{% block title %}Alterar Informações - Portal do Cliente{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
-    <!-- Card do Formulário -->
-    <div class="card">
-        <div class="card-header bg-primary text-white">
-            Alterar Informações
-        </div>
-        <div class="card-body">
-            <form action="{% url 'edit' %}" method="POST">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <div class="text-end">
-                    <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+<div class="main">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        Alterar Informações
+                    </div>
+                    <div class="card-body">
+                        <!-- Alerts -->
+                        {% include 'partials/_alert.html' %}
+                        <form action="{% url 'edit' %}" method="POST">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                        </form>
+                    </div>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>
-{% endblock %}
-
-{% block scripts %}
-<!-- Scripts adicionais, se necessários -->
 {% endblock %}

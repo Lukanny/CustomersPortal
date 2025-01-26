@@ -22,15 +22,9 @@
 </head>
 <body>
     <div class="wrapper">
-        <!-- Sidebar -->
-        {% block sidebar %}
         {% include 'partials/sidebar.html' %}
-        {% endblock %}
-
-        <!-- Conteúdo Principal -->
         <div class="main-content">
-            {% block content %}
-            {% endblock %}
+            {% block content %}{% endblock %}
         </div>
     </div>
 
