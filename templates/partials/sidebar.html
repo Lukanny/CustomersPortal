@@ -8,11 +8,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>PROSESMT - Portal do Cliente</title>
 
-    <!-- Bootstrap CSS -->
+    <!--Bootstrap CSS-->
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-    <!-- FontAwesome CSS -->
+
+    <!--FontAwesome CSS-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <!-- Sidebar CSS -->
+
+    <!--Sidebar CSS-->
     <link href="{% static 'css/sidebar.css' %}" rel="stylesheet">
 </head>
 <body>
@@ -24,15 +26,21 @@
     <!-- Sidebar -->
     <aside id="sidebar" class="collapse d-md-block">
         <div class="h-100">
-            <div class="sidebar-logo text-center">
+            <!-- Logo da Sidebar -->
+            <div class="sidebar-logo">
                 <h3>PROSESMT</h3>
             </div>
+
+            <!-- Navegação -->
             <ul class="sidebar-nav">
+                <!-- Dashboard -->
                 <li class="sidebar-item">
                     <a href="{% url 'dashboard' %}" class="sidebar-link">
                         <i class="fa-solid fa-list"></i> Dashboard
                     </a>
                 </li>
+
+                <!-- Minha Conta -->
                 <li class="sidebar-item">
                     <a href="#" class="sidebar-link collapsed" data-bs-target="#menu-minha-conta" data-bs-toggle="collapse" aria-expanded="false">
                         <i class="fa-regular fa-user"></i> Minha Conta
@@ -43,6 +51,8 @@
                         </li>
                     </ul>
                 </li>
+
+                <!-- Fale Conosco -->
                 <li class="sidebar-item">
                     <a href="#" class="sidebar-link collapsed" data-bs-target="#menu-fale-conosco" data-bs-toggle="collapse" aria-expanded="false">
                         <i class="fa-solid fa-headset"></i> Fale Conosco
@@ -61,15 +71,22 @@
                     </ul>
                 </li>
             </ul>
-            <div class="logout text-center mt-4">
-                <a href="{% url 'logout' %}" class="btn btn-danger w-75">
+
+            <!-- Logout -->
+            <div class="logout">
+                <a href="{% url 'logout' %}" class="sidebar-link">
                     <i class="fa-solid fa-arrow-left"></i> Sair
                 </a>
             </div>
         </div>
     </aside>
 
-    <!-- Bootstrap JS -->
+    <!-- Conteúdo Principal -->
+    <div class="container" style="margin-left: 270px; padding-top: 20px;">
+        {% block content %} {% endblock %}
+    </div>
+
+    <!--Bootstrap JS-->
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>
