@@ -1,23 +1,20 @@
-# Use the official Python image from the Docker Hub
-FROM python:3.12
+FROM python:3.12-slim
 
-# Set the working directory
 WORKDIR /app
 
-# Copy the requirements file to the container
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libpq-dev \
+    default-libmysqlclient-dev \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
+
 COPY requirements.txt .
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
 
-# Install the dependencies
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy the project files to the container
 COPY . .
 
-# Collect static files
-RUN python manage.py collectstatic --noinput
-
-# Expose the port on which the app will run
 EXPOSE 8000
 
-# Run the application
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "core.wsgi:application"]
+ENTRYPOINT ["sh", "./entrypoint.sh"]

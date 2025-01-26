@@ -14,6 +14,10 @@ from pathlib import Path
 
 import os
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -22,12 +26,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-^@95arc*sj)-t8$c=_+ljxy-84ssxmashk4%ak4ia!=4z8+&)*'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    'django_gunicorn',
+    '127.0.0.1',
+    'prosesmtsegurancadotrabalho.com',
+    'www.prosesmtsegurancadotrabalho.com',
+    '18.118.95.8',
+]
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 
 # Application definition
@@ -59,7 +72,17 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
-CORS_ORIGIN_ALLOW_ALL = True
+CSRF_TRUSTED_ORIGINS = [
+    'https://prosesmtsegurancasotrabalho.com',
+    'https://www.prosesmtsegurancasotrabalho.com',
+]
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+CSRF_COOKIE_SECURE = True 
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_HTTPONLY = False 
+SESSION_COOKIE_HTTPONLY = True  
 
 ROOT_URLCONF = 'core.urls'
 
@@ -88,13 +111,14 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'customerportal',
-        'USER': 'test',
-        'PASSWORD': 'Secret',
-        'HOST': 'localhost',
-        'PORT': 3306
+        'NAME': os.getenv('MYSQL_DATABASE'),
+        'USER': os.getenv('MYSQL_USER'),
+        'PASSWORD': os.getenv('MYSQL_PASSWORD'),
+        'HOST': os.getenv('DATABASE_HOST', 'db'),
+        'PORT': os.getenv('DATABASE_PORT', '3306'),
     }
 }
+
 
 
 # Password validation
@@ -131,8 +155,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')  # Collect static into /app/static
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'core/static')]
 
 
@@ -155,13 +179,13 @@ MESSAGE_TAGS = {
 LOGIN_URL = 'login'
 
 # EMAIL Conf
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.titan.email'
-EMAIL_PORT = '465'
+EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
 EMAIL_USE_SSL = True
 EMAIL_USE_TSL = False
-EMAIL_HOST_USER = 'administracao@prosesmtsegurancadotrabalho.com'
-EMAIL_HOST_PASSWORD = 'D;0>OAFU}TlM6&|'
-DEFAULT_FROM_EMAIL = 'administracao@prosesmtsegurancadotrabalho.com'
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
 
 SITE_ID = 2
