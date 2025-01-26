@@ -1,133 +1,58 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
-
-/* Base styling */
-body {
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f8f9fa;
-    color: #333;
-}
-
-/* Wrapper adjustments to respect the sidebar */
-.wrapper {
-    display: flex;
-}
-
-.main {
-    flex: 1;
+/* Ajustes no layout para respeitar a sidebar */
+.container {
+    margin-left: 260px; /* Compatível com a largura da sidebar */
     padding: 20px;
-    margin-left: 250px; /* Reserve space for the sidebar */
-    overflow-x: hidden;
 }
 
-/* Dashboard Table */
-#fileTable {
-    border-radius: 10px;
-    overflow: hidden;
-    border: 1px solid #ccc;
-    width: 100%;
+/* Card de boas-vindas */
+.card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 
-#fileTable thead th {
-    background-color: #09112d;
-    color: white;
-    text-align: center;
-}
-
-#fileTable tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-#fileTable tbody tr:hover {
-    background-color: #f2f2f2;
-}
-
-#fileTable tbody td {
-    text-align: center;
-}
-
-/* Buttons inside the table */
-#fileTable .btn-success {
-    background-color: #28a745;
-    border-color: #28a745;
-}
-
-#fileTable .btn-success:hover {
-    background-color: #218838;
-    border-color: #1e7e34;
-}
-
-/* Card styling */
-.card {
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    background-color: white;
-    padding: 15px;
-    margin-bottom: 20px;
-}
-
-.card-header {
-    font-weight: 600;
-    font-size: 1.25rem;
-    padding: 1rem;
-    background-color: #09112d;
-    color: white;
-    border-radius: 8px 8px 0 0;
-}
-
-/* DataTables styling */
-table.dataTable {
-    width: 100%;
-    border-radius: 8px;
-    overflow: hidden;
-    border-collapse: separate;
-}
-
-.dataTables_wrapper .dataTables_filter input {
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    padding: 5px 10px;
-    background: #f9f9f9;
-}
-
-.dataTables_wrapper .dataTables_length select {
-    border-radius: 5px;
-    padding: 5px;
-    background: #f9f9f9;
-}
-
-.dataTables_wrapper .dataTables_paginate .paginate_button {
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    padding: 5px 10px;
-    background: #e9ecef;
-    color: #333;
-}
-
-.dataTables_wrapper .dataTables_paginate .paginate_button.current {
-    background-color: #007bff;
-    color: #fff;
-}
-
-.dataTables_wrapper .dataTables_info {
+.card-text {
+    font-size: 1rem;
     color: #555;
 }
 
-/* Responsive adjustments */
+/* Estilização da tabela */
+.table {
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+.table thead th {
+    background-color: #09112d;
+    color: #fff;
+}
+
+.table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+.table .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.table .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+/* Responsividade */
 @media (max-width: 768px) {
-    .main {
-        margin-left: 0; /* Collapse sidebar space on smaller screens */
+    .container {
+        margin-left: 0;
         padding: 10px;
     }
 
-    #fileTable {
-        font-size: 0.85rem;
+    .card-title {
+        font-size: 1.25rem;
     }
 
-    .card-header {
-        font-size: 1rem;
-        text-align: center;
+    .table {
+        font-size: 0.9rem;
     }
 }
