@@ -1,134 +1,36 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
 
-body {
+body{
     font-family: 'Poppins', sans-serif;
     background: #ececec;
-    margin: 0;
-    padding: 0;
 }
 
-/* Container principal */
-.box-area {
+/*------------ Login container ------------*/
+
+.box-area{
     width: 930px;
-    background-color: white;
-    padding: 20px;
+}
+
+
+/*------------ Custom Placeholder ------------*/
+
+::placeholder{
+    font-size: 16px;
+}
+
+.rounded-5{
     border-radius: 30px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Estilo para os placeholders */
-::placeholder {
-    font-size: 16px;
-    color: #adb5bd;
-}
-
-/* Títulos */
-h2.header-text {
-    font-weight: bold;
-    font-size: 1.5rem;
-    color: #09112d;
-    margin-bottom: 20px;
-}
-
-/* Input */
-input.form-control {
-    border-radius: 8px;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ced4da;
-    background-color: #f8f9fa;
-    color: #495057;
-    transition: all 0.2s ease-in-out;
-}
-
-input.form-control:focus {
-    border-color: #09112d;
-    outline: none;
-    box-shadow: 0 0 5px rgba(9, 17, 45, 0.5);
-}
-
-/* Botão de finalizar cadastro */
 .finish-registration-button {
     background-color: #09112d;
-    color: white;
-    font-weight: bold;
-    border: none;
-    border-radius: 8px;
-    transition: all 0.3s ease-in-out;
 }
 
-.finish-registration-button:hover {
-    background-color: #0a1c3f;
-}
 
-/* Botão de voltar */
-.back-button {
-    background-color: #6c757d;
-    color: white;
-    font-weight: bold;
-    border: none;
-    border-radius: 8px;
-    transition: all 0.3s ease-in-out;
-}
+/*------------ For small screens------------*/
 
-.back-button:hover {
-    background-color: #5a6268;
-}
-
-/* Botão de exibir senha */
-.show-password {
-    background: none;
-    border: none;
-    color: #495057;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-.show-password:hover {
-    color: #09112d;
-}
-
-/* Validação de campos */
-.input-group .error {
-    color: #e74c3c;
-    font-size: 14px;
-    margin-top: 5px;
-    display: block;
-}
-
-/* Link para reenviar código */
-.resend-code {
-    color: #09112d;
-    text-decoration: underline;
-    font-size: 14px;
-    cursor: pointer;
-    margin-left: 5px;
-}
-
-.resend-code:hover {
-    color: #0a1c3f;
-}
-
-/* Responsividade */
-@media only screen and (max-width: 768px) {
-    .box-area {
-        width: 90%;
-        margin: 10px auto;
-        padding: 15px;
-    }
-
-    h2.header-text {
-        font-size: 1.25rem;
-    }
-
-    input.form-control {
-        font-size: 14px;
-        padding: 8px;
-    }
-
-    .finish-registration-button,
-    .back-button {
-        font-size: 14px;
-        padding: 10px;
-    }
+@media only screen and (max-width: 768px){
+     .box-area{
+        margin: 0 10px;
+     }
 }

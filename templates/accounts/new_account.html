@@ -5,94 +5,75 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Usuário - PROSESMT</title>
-
     <!--Bootstrap CSS-->
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-    <!--Custom CSS-->
+    <!--Index page CSS-->
     <link href="{% static 'css/pages/new_account.css' %}" rel="stylesheet">
+    <title>Portal do Cliente - PROSESMT</title>
 </head>
 <body>
-    <div class="container mt-5">
-        <!-- Botão Voltar -->
-        <div class="d-flex justify-content-start mb-3">
-            <a href="{% url 'login' %}" class="btn btn-secondary">&larr; Voltar</a>
-        </div>
-
-        <!-- Formulário -->
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="card shadow-sm">
-                    <div class="card-header text-center bg-primary text-white">
-                        <h3>Cadastro de Usuário</h3>
+    <div class="container d-flex justify-content-center align-items-center mt-3">
+        <div class="row border rounded-5 p-3 bg-white shadow box-area">
+            <div class="row align-items-center">
+                <h2 class="header-text mb-4 text-center">
+                    Informações necessárias para cadastro
+                </h2>
+                <!-- Alerts -->
+                {% include 'partials/_alert.html' %}
+                <form action="{% url 'register' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="input-group mb-3">
+                        <input type="text" name='empregado_nome' class="form-control form-control-md bg-light fs-6" placeholder="Nome do Representante Legal da Empresa"required >
                     </div>
-                    <div class="card-body">
-                        <form action="{% url 'register' %}" method="POST">
-                            {% csrf_token %}
-                            
-                            <!-- Nome do Representante -->
-                            <div class="mb-3">
-                                <label for="empregado_nome" class="form-label">Nome do Representante Legal</label>
-                                <input type="text" name="empregado_nome" id="empregado_nome" class="form-control" placeholder="Insira o nome" required>
-                            </div>
-
-                            <!-- CPF do Representante -->
-                            <div class="mb-3">
-                                <label for="empregado_cpf" class="form-label">CPF</label>
-                                <input type="text" name="empregado_cpf" id="empregado_cpf" class="form-control" placeholder="Insira o CPF" required>
-                            </div>
-
-                            <!-- E-mail -->
-                            <div class="mb-3">
-                                <label for="email_funcionario" class="form-label">E-mail</label>
-                                <input type="email" name="email_funcionario" id="email_funcionario" class="form-control" placeholder="Insira o e-mail" required>
-                            </div>
-
-                            <!-- Confirmar E-mail -->
-                            <div class="mb-3">
-                                <label for="email_funcionario2" class="form-label">Confirmar E-mail</label>
-                                <input type="email" name="email_funcionario2" id="email_funcionario2" class="form-control" placeholder="Confirme o e-mail" required>
-                            </div>
-
-                            <!-- Senha -->
-                            <div class="mb-3">
-                                <label for="senha" class="form-label">Senha</label>
-                                <div class="input-group">
-                                    <input type="password" name="senha" id="senha" class="form-control" placeholder="Crie uma senha" required>
-                                    <button type="button" class="btn btn-outline-secondary" id="toggleSenha">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                </div>
-                                <small class="form-text text-muted">Sua senha deve ter entre 8-20 caracteres, combinando letras, números e símbolos.</small>
-                            </div>
-
-                            <!-- Confirmar Senha -->
-                            <div class="mb-3">
-                                <label for="senha2" class="form-label">Confirmar Senha</label>
-                                <div class="input-group">
-                                    <input type="password" name="senha2" id="senha2" class="form-control" placeholder="Confirme a senha" required>
-                                    <button type="button" class="btn btn-outline-secondary" id="toggleSenha2">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Botão Concluir Cadastro -->
-                            <div class="d-grid">
-                                <button type="submit" class="btn btn-primary">Concluir Cadastro</button>
-                            </div>
-                        </form>
+                    <div class="input-group mb-3">
+                        <input type="text" name="empregado_cpf" class="form-control form-control-md bg-light fs-6" placeholder="CPF do Representante Legal da Empresa" required>
                     </div>
-                </div>
+                    <div class="input-group mb-3">
+                        <input type="email" name='email_funcionario' class="form-control form-control-md bg-light fs-6" placeholder="E-mail" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="email" name='email_funcionario2' class="form-control form-control-md bg-light fs-6" placeholder="Confirmar E-mail" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" name="empregado_cargo" class="form-control form-control-md bg-light fs-6" placeholder="Cargo do Representante Legal da Empresa" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" name='cnpj_empresa' class="form-control form-control-md bg-light fs-6" placeholder="CNPJ da Empresa" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" name='nome_empresa' class="form-control form-control-md bg-light fs-6" placeholder="Nome Fantasia da Empresa" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" name='endereco_empresa' class="form-control form-control-md bg-light fs-6" placeholder="Endereço" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="number" name='telefone_empresa' class="form-control form-control-md bg-light fs-6" placeholder="Telefone" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" name='usuario' class="form-control form-control-md bg-light fs-6" placeholder="Usuário" required>
+                    </div>
+                    <div class="input-group mb-1">
+                        <input type="password" name="senha" class="form-control form-control-md bg-light fs-6" aria-describedby="passwordHelpBlock" placeholder="Senha" required>
+                    </div>
+                    <div class="input-group mb-1">
+                        <input type="password" name='senha2' class="form-control form-control-md bg-light fs-6" aria-describedby="passwordHelpBlock" placeholder="Confirmar Senha" required>
+                        <button type="button" class="btn btn-outline-secondary" id="toggleSenha">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div id="passwordHelpBlock" class="form-text mb-3">
+                        Sua senha deve ter entre 8-20 caracteres, combinando letras, números e símbolos especiais.
+                    </div>
+                    <div class="input-group mb-3">
+                        <button class="btn btn-lg btn-primary w-100 fs-6 finish-registration-button">Concluir cadastro</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-
-    <!--Bootstrap JS-->
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-    <!--FontAwesome JS-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
-    <!--Custom JS-->
+</body>
+    <script src="/static/js/jquery-3.7.1.min.js"></script>
+    <script src="/static/js/main.js"></script>
     <script>
         // Toggle password visibility
         document.getElementById('toggleSenha').addEventListener('click', function () {
@@ -111,5 +92,4 @@
             this.querySelector('i').classList.toggle('fa-eye-slash');
         });
     </script>
-</body>
 </html>
