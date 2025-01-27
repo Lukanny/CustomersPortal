@@ -3,16 +3,23 @@
     background-color: #2c3e50;
     color: #ecf0f1;
     height: 100vh;
-    width: 250px; /* Largura fixa da sidebar */
+    width: 250px; /* Fixed width for the sidebar */
     position: fixed;
     top: 0;
     left: 0;
     padding: 15px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     overflow-y: auto;
-    z-index: 1000; /* Garante que a sidebar esteja sempre visível */
+    z-index: 1000; /* Ensures the sidebar is always on top */
 }
 
+/* Adjusting main content to avoid overlapping the sidebar */
+.main {
+    margin-left: 250px; /* Same width as the sidebar */
+    padding: 20px; /* Add some padding for spacing */
+}
+
+/* Sidebar Logo */
 .sidebar-logo h3 {
     color: #ecf0f1;
     font-size: 18px;
@@ -20,6 +27,7 @@
     margin-bottom: 20px;
 }
 
+/* Sidebar Navigation */
 .sidebar-nav {
     list-style: none;
     padding: 0;
@@ -52,6 +60,7 @@
     margin-right: 10px;
 }
 
+/* Logout Button */
 .logout {
     text-align: center;
 }
@@ -68,9 +77,13 @@
     background-color: #c0392b;
 }
 
-/* Responsividade */
+/* Responsive Sidebar */
 @media (max-width: 768px) {
     #sidebar {
-        width: 200px; /* Sidebar mais estreita em telas pequenas */
+        width: 200px; /* Narrower sidebar for smaller screens */
+    }
+
+    .main {
+        margin-left: 200px; /* Adjust content margin accordingly */
     }
 }
