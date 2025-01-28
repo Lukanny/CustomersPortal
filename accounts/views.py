@@ -74,12 +74,6 @@ def is_valid_cnpj(cnpj):
     if len(cnpj) != 14 or not cnpj.isdigit():
         return False
     # Calcula os dígitos verificadores
-    weight = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2]
-    for i in range(12, 14):
-        value = sum((int(cnpj[num]) * weight[num + (14 - i)]) for num in range(0, i))
-        digit = ((value % 11) % 10)
-        if digit != int(cnpj[i]):
-            return False
     return True
 
 def register(request):
