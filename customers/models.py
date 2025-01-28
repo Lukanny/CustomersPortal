@@ -3,9 +3,22 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 
+class Endereço(models.Model):
+    rua = models.CharField(max_length=254)
+    bairro = models.CharField(max_length=254)
+    número = models.CharField(max_length=10)
+    cep = models.CharField(max_length=9)
+    cidade = models.CharField(max_length=100)
+    estado = models.CharField(max_length=50)
+    país = models.CharField(max_length=100, default="Brasil")
+
+    def __str__(self):
+        return f"{self.rua}, {self.número} - {self.bairro}, {self.cidade} - {self.estado} ({self.cep})"
+
+
 class Empresa(models.Model):
     nome_fantasia_da_empresa = models.CharField(max_length=254)
-    endereço_da_empresa = models.CharField(max_length=254)
+    endereço_da_empresa = models.OneToOneField(Endereço, on_delete=models.CASCADE, related_name="empresa")
     número_de_telefone_da_empresa = models.CharField(max_length=15)
     cnpj_da_empresa = models.CharField(max_length=12)
     data_de_registro_da_empresa = models.DateTimeField(editable=False)
@@ -19,7 +32,7 @@ class Empresa(models.Model):
     
     def __str__(self):
         return f"{self.nome_fantasia_da_empresa}"
-    
+ 
 
 class Representante(models.Model):
     nome_do_representante_legal = models.CharField(max_length=254)
