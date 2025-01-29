@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 
-class Endereço(models.Model):
+class Endereco(models.Model):
     rua = models.CharField(max_length=254)
     bairro = models.CharField(max_length=254)
     número = models.CharField(max_length=10)
@@ -18,7 +18,7 @@ class Endereço(models.Model):
 
 class Empresa(models.Model):
     nome_fantasia_da_empresa = models.CharField(max_length=254)
-    endereço_da_empresa = models.OneToOneField(Endereço, on_delete=models.CASCADE, related_name="empresa")
+    endereço_da_empresa = models.OneToOneField(Endereco, on_delete=models.CASCADE, related_name="empresa")
     número_de_telefone_da_empresa = models.CharField(max_length=15)
     cnpj_da_empresa = models.CharField(max_length=12)
     data_de_registro_da_empresa = models.DateTimeField(editable=False)

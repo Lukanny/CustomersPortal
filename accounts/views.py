@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.shortcuts import render, redirect, HttpResponse
-from customers.models import Empresa, Endereço, Representante
+from customers.models import Empresa, Endereco, Representante
 from customers.forms import RepresentanteForm
 from string import punctuation
 
@@ -139,7 +139,7 @@ def register(request):
                     }
                 )
                 if created:
-                    endereco = Endereço.objects.create(
+                    endereco = Endereco.objects.create(
                         rua=street,
                         bairro=neighborhood,
                         número=number,
