@@ -3,7 +3,7 @@ from .models import Representante
 
 
 class RepresentanteForm(forms.ModelForm):
-    cnpj_da_empresa = forms.CharField(
+    cnpj = forms.CharField(
         max_length=12,
         required=False,
         widget=forms.TextInput(attrs={
@@ -12,7 +12,7 @@ class RepresentanteForm(forms.ModelForm):
             'style': 'background-color: #343a40;',
         })
     )
-    nome_fantasia_da_empresa = forms.CharField(
+    nome_fantasia = forms.CharField(
         max_length=254,
         required=False,
         widget=forms.TextInput(attrs={
@@ -26,22 +26,22 @@ class RepresentanteForm(forms.ModelForm):
     class Meta:
         model = Representante
         fields = [
-            'nome_do_representante_legal',
-            'cpf_do_representante_legal',
-            'cargo_do_representante_legal',
-            'email_do_representante_legal',
-            'nome_fantasia_da_empresa',
-            'cnpj_da_empresa',
+            'nome',
+            'cpf',
+            'cargo',
+            'email',
+            'nome_fantasia',
+            'cnpj',
         ]
 
     def __init__(self, *args, **kwargs) -> None:
         super(RepresentanteForm, self).__init__(*args, **kwargs)
 
         readonly_fields = [
-            'nome_do_representante_legal',
-            'cpf_do_representante_legal',
-            'nome_fantasia_da_empresa',
-            'cnpj_da_empresa',
+            'nome',
+            'cpf',
+            'nome_fantasia',
+            'cnpj',
         ]
 
         for field in readonly_fields:
@@ -52,15 +52,15 @@ class RepresentanteForm(forms.ModelForm):
             })
 
         if self.instance and self.instance.empresa:
-            self.fields['cnpj_da_empresa'].initial = self.instance.empresa.cnpj_da_empresa
-            self.fields['nome_fantasia_da_empresa'].initial = self.instance.empresa.nome_fantasia_da_empresa
+            self.fields['cnpj'].initial = self.instance.empresa.cnpj
+            self.fields['nome_fantasia'].initial = self.instance.empresa.nome_fantasia
 
-        self.fields['cargo_do_representante_legal'].widget.attrs.update({
+        self.fields['cargo'].widget.attrs.update({
             'class': 'form-control form-control-md fs-6 text-dark bg-light',
         })
-        self.fields['cargo_do_representante_legal'].label = "Cargo Atual"
+        self.fields['cargo'].label = "Cargo Atual"
 
-        self.fields['email_do_representante_legal'].widget.attrs.update({
+        self.fields['email'].widget.attrs.update({
             'class': 'form-control form-control-md fs-6 text-dark bg-light',
         })
-        self.fields['email_do_representante_legal'].label = "E-mail Administrativo"
+        self.fields['email'].label = "E-mail Administrativo"

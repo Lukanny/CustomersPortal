@@ -132,26 +132,26 @@ def register(request):
             with transaction.atomic():
                 # Criação da empresa e endereço
                 empresa, created = Empresa.objects.get_or_create(
-                    nome_fantasia_da_empresa=company_name,
-                    cnpj_da_empresa=company_nif,
+                    nome_fantasia=company_name,
+                    cnpj=company_nif,
                     defaults={
-                        'número_de_telefone_da_empresa': phone,
+                        'telefone': phone,
                     }
                 )
                 if created:
                     endereco = Endereco.objects.create(
                         rua=street,
                         bairro=neighborhood,
-                        número=number,
+                        numero=number,
                         cep=zip_code,
                         cidade=city,
                         estado=state
                     )
-                    empresa.endereço_da_empresa = endereco
+                    empresa.endereco = endereco
                     empresa.save()
 
                 # Verifica se o representante já está cadastrado
-                if Representante.objects.filter(cpf_do_representante_legal=employee_nif).exists():
+                if Representante.objects.filter(cpf=employee_nif).exists():
                     messages.error(request, 'Representante legal já cadastrado!')
                     return redirect('register')
 
@@ -172,10 +172,10 @@ def register(request):
                 # Cria o representante
                 Representante.objects.create(
                     empresa=empresa,
-                    nome_do_representante_legal=employee,
-                    cpf_do_representante_legal=employee_nif,
-                    cargo_do_representante_legal=employee_position,
-                    email_do_representante_legal=employee_email,
+                    nome=employee,
+                    cpf=employee_nif,
+                    cargo=employee_position,
+                    email=employee_email,
                     username=user
                 )
 
