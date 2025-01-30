@@ -31,14 +31,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    'localhost',
-    'django_gunicorn',
-    '127.0.0.1',
-    'prosesmtsegurancadotrabalho.com',
-    'www.prosesmtsegurancadotrabalho.com',
-    '18.118.95.8',
-]
+ALLOWED_HOSTS = ['*']
 
 CORS_ORIGIN_ALLOW_ALL = True
 
