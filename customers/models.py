@@ -20,7 +20,7 @@ class Empresa(models.Model):
     nome_fantasia = models.CharField(max_length=254)  # Shortened field name
     endereco = models.OneToOneField(Endereco, on_delete=models.CASCADE, related_name="empresa")  # Changed from 'endereço_da_empresa'
     telefone = models.CharField(max_length=15)  # Shortened field name
-    cnpj = models.CharField(max_length=12)
+    cnpj = models.CharField(max_length=14)
     data_registro = models.DateTimeField(editable=False)  # Changed from 'data_de_registro_da_empresa'
     ultima_edicao = models.DateTimeField(editable=False)  # Changed from 'última_edição_no_perfil_da_empresa'
 
