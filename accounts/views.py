@@ -128,63 +128,63 @@ def register(request):
             messages.error(request, 'Telefone inválido! Certifique-se de inserir um número com DDD.')
             return redirect('register')
 
-        try:
-            with transaction.atomic():
-                # Criação da empresa e endereço
-                empresa, created = Empresa.objects.get_or_create(
-                    nome_fantasia=company_name,
-                    cnpj=company_nif,
-                    defaults={
-                        'telefone': phone,
-                    }
-                )
-                if created:
-                    endereco = Endereco.objects.create(
-                        rua=street,
-                        bairro=neighborhood,
-                        numero=number,
-                        cep=zip_code,
-                        cidade=city,
-                        estado=state
-                    )
-                    empresa.endereco = endereco
-                    empresa.save()
+    try:
+        with transaction.atomic():
+            # Criação do endereço
+            endereco = Endereco.objects.create(
+                rua=street,
+                bairro=neighborhood,
+                numero=number,
+                cep=zip_code,
+                cidade=city,
+                estado=state
+            )
 
-                # Verifica se o representante já está cadastrado
-                if Representante.objects.filter(cpf=employee_nif).exists():
-                    messages.error(request, 'Representante legal já cadastrado!')
-                    return redirect('register')
+            # Criação da empresa com o endereço
+            empresa, created = Empresa.objects.get_or_create(
+                nome_fantasia=company_name,
+                cnpj=company_nif,
+                defaults={
+                    'telefone': phone,
+                    'endereco': endereco  # Assign the endereco instance here
+                }
+            )
 
-                # Verifica se o nome de usuário já está em uso
-                if User.objects.filter(username=username).exists():
-                    messages.error(request, 'Usuário já em uso!')
-                    return redirect('register')
+            # Verifica se o representante já está cadastrado
+            if Representante.objects.filter(cpf=employee_nif).exists():
+                messages.error(request, 'Representante legal já cadastrado!')
+                return redirect('register')
 
-                # Cria o usuário
-                user = User.objects.create_user(
-                    username=username,
-                    email=employee_email,
-                    password=password,
-                    first_name=employee.split(' ')[0],
-                    last_name=employee.split(' ')[-1]
-                )
+            # Verifica se o nome de usuário já está em uso
+            if User.objects.filter(username=username).exists():
+                messages.error(request, 'Usuário já em uso!')
+                return redirect('register')
 
-                # Cria o representante
-                Representante.objects.create(
-                    empresa=empresa,
-                    nome=employee,
-                    cpf=employee_nif,
-                    cargo=employee_position,
-                    email=employee_email,
-                    username=user
-                )
+            # Cria o usuário
+            user = User.objects.create_user(
+                username=username,
+                email=employee_email,
+                password=password,
+                first_name=employee.split(' ')[0],
+                last_name=employee.split(' ')[-1]
+            )
 
-                messages.success(request, 'Conta criada com sucesso! Faça login na plataforma.')
-                return redirect('login')
+            # Cria o representante
+            Representante.objects.create(
+                empresa=empresa,
+                nome=employee,
+                cpf=employee_nif,
+                cargo=employee_position,
+                email=employee_email,
+                username=user
+            )
 
-        except Exception as e:
-            messages.error(request, f'Ocorreu um erro durante o cadastro: {str(e)}')
-            return redirect('register')
+            messages.success(request, 'Conta criada com sucesso! Faça login na plataforma.')
+            return redirect('login')
+
+    except Exception as e:
+        messages.error(request, f'Ocorreu um erro durante o cadastro: {str(e)}')
+        return redirect('register')
 
     return render(request, "accounts/new_account.html")
 
