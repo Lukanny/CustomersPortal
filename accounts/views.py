@@ -96,7 +96,7 @@ def register(request):
         username = request.POST['usuario']
         password = request.POST['senha']
         confirm_password = request.POST['senha2']
-        
+
         # Validações
         if not is_valid_cpf(employee_nif):
             messages.error(request, 'CPF inválido!')
@@ -130,54 +130,63 @@ def register(request):
 
         try:
             with transaction.atomic():
-                # Check if an Empresa with the given CNPJ exists
-                empresa_exists = Empresa.objects.filter(cnpj=company_nif).exists()
+                # 1. Get or create the Endereco
+                endereco, endereco_created = Endereco.objects.get_or_create(
+                    rua=street,
+                    bairro=neighborhood,
+                    numero=number,
+                    cep=zip_code,
+                    cidade=city,
+                    estado=state,
+                    defaults={}  # Any other defaults for Endereco
+                )
 
-                empresa, created = Empresa.objects.get_or_create(
-                    nome_fantasia=company_name,
-                    cnpj=company_nif,
+                # 2. Get or create the Empresa
+                empresa, empresa_created = Empresa.objects.get_or_create(
+                    cnpj=company_nif,  # Use CNPJ to find the company
                     defaults={
+                        'nome_fantasia': company_name,
                         'telefone': phone,
+                        'endereco': endereco,  # Assign the endereco ONLY if the company is NEW
                     }
                 )
 
-                if not created:  # Empresa already existed
-                    # Check if an Endereco with the same details exists
-                    endereco = Endereco.objects.filter(
-                        rua=street,
-                        bairro=neighborhood,
-                        numero=number,
-                        cep=zip_code,
-                        cidade=city,
-                        estado=state
-                    ).first()
-
-                    if endereco:
-                        empresa.endereco = endereco
-                        empresa.save()
-                    else:
-                        endereco = Endereco.objects.create(
-                            rua=street,
-                            bairro=neighborhood,
-                            numero=number,
-                            cep=zip_code,
-                            cidade=city,
-                            estado=state
-                        )
-                        empresa.endereco = endereco
-                        empresa.save()
-
-                elif created:  # Empresa is new
-                    endereco = Endereco.objects.create(
-                        rua=street,
-                        bairro=neighborhood,
-                        numero=number,
-                        cep=zip_code,
-                        cidade=city,
-                        estado=state
-                    )
+                # 3. Update the Empresa's address if it ALREADY EXISTED and it's a DIFFERENT address
+                if not empresa_created and empresa.endereco != endereco:
                     empresa.endereco = endereco
                     empresa.save()
+
+                # Verifica se o representante já está cadastrado
+                if Representante.objects.filter(cpf=employee_nif).exists():
+                    messages.error(request, 'Representante legal já cadastrado!')
+                    return redirect('register')
+
+                # Verifica se o nome de usuário já está em uso
+                if User.objects.filter(username=username).exists():
+                    messages.error(request, 'Usuário já em uso!')
+                    return redirect('register')
+
+                # Cria o usuário
+                user = User.objects.create_user(
+                    username=username,
+                    email=employee_email,
+                    password=password,
+                    first_name=employee.split(' ')[0],
+                    last_name=employee.split(' ')[-1]
+                )
+
+                # Cria o representante
+                Representante.objects.create(
+                    empresa=empresa,
+                    nome=employee,
+                    cpf=employee_nif,
+                    cargo=employee_position,
+                    email=employee_email,
+                    username=user
+                )
+
+                messages.success(request, 'Conta criada com sucesso! Faça login na plataforma.')
+                return redirect('login')
 
         except Exception as e:
             messages.error(request, f'Ocorreu um erro durante o cadastro: {str(e)}')
