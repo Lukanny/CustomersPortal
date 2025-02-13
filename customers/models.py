@@ -6,23 +6,23 @@ from django.contrib.auth.models import User
 class Endereco(models.Model):
     rua = models.CharField(max_length=254)
     bairro = models.CharField(max_length=254)
-    numero = models.CharField(max_length=10)  # Changed from 'número'
+    numero = models.CharField(max_length=10)
     cep = models.CharField(max_length=9)
     cidade = models.CharField(max_length=100)
     estado = models.CharField(max_length=50)
-    pais = models.CharField(max_length=100, default="Brasil")  # Changed from 'país'
+    pais = models.CharField(max_length=100, default="Brasil")
 
     def __str__(self):
         return f"{self.rua}, {self.numero} - {self.bairro}, {self.cidade} - {self.estado} ({self.cep})"
 
 
 class Empresa(models.Model):
-    nome_fantasia = models.CharField(max_length=254)  # Shortened field name
-    endereco = models.OneToOneField(Endereco, on_delete=models.CASCADE, related_name="empresa")  # Changed from 'endereço_da_empresa'
-    telefone = models.CharField(max_length=15)  # Shortened field name
+    nome_fantasia = models.CharField(max_length=254)
+    endereco = models.OneToOneField(Endereco, on_delete=models.CASCADE, related_name="empresa")
+    telefone = models.CharField(max_length=15)
     cnpj = models.CharField(max_length=14)
-    data_registro = models.DateTimeField(editable=False)  # Changed from 'data_de_registro_da_empresa'
-    ultima_edicao = models.DateTimeField(editable=False)  # Changed from 'última_edição_no_perfil_da_empresa'
+    data_registro = models.DateTimeField(editable=False)
+    ultima_edicao = models.DateTimeField(editable=False)
 
     def save(self, *args, **kwargs):
         if not self.pk:
@@ -35,18 +35,19 @@ class Empresa(models.Model):
  
 
 class Representante(models.Model):
-    nome = models.CharField(max_length=254)  # Shortened field name
-    cpf = models.CharField(max_length=11)  # Shortened field name
-    cargo = models.CharField(max_length=254)  # Shortened field name
+    nome = models.CharField(max_length=254)  
+    cpf = models.CharField(max_length=11)  
+    cargo = models.CharField(max_length=254)  
     email = models.EmailField(max_length=254)
-    data_registro = models.DateTimeField(editable=False)  # Changed from 'data_de_registro_do_representante'
-    ultima_edicao = models.DateTimeField(editable=False)  # Changed from 'última_edição_no_perfil_do_representante'
+    data_registro = models.DateTimeField(editable=False)  
+    ultima_edicao = models.DateTimeField(editable=False)  
     empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE, related_name='workers')
     username = models.OneToOneField(User, on_delete=models.CASCADE)
+    activation_token = models.CharField(max_length=255, blank=True, null=True) 
 
     @property
     def cnpj(self):
-        return self.empresa.cnpj if self.empresa else None  # Changed from 'cnpj_da_empresa'
+        return self.empresa.cnpj if self.empresa else None
 
     def save(self, *args, **kwargs):
         if not self.pk:

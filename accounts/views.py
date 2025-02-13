@@ -2,11 +2,19 @@ from django.contrib import messages, auth
 from django.contrib.auth import logout, views as auth_views
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ValidationError
+from django.core.mail import EmailMultiAlternatives
+from django.core.validators import validate_email
 from django.db import transaction
 from django.shortcuts import render, redirect, HttpResponse
 from customers.models import Empresa, Endereco, Representante
 from customers.forms import RepresentanteForm
 from string import punctuation
+
+
+import re
+import uuid
+import boto3
 
 @login_required
 def dashboard(request):
@@ -50,10 +58,7 @@ def custom_logout(request):
     logout(request)
     return redirect('login')
 
-import re
-from django.db import transaction
-from django.core.validators import validate_email
-from django.core.exceptions import ValidationError
+
 
 def is_valid_cpf(cpf):
     """Valida o CPF"""
@@ -78,7 +83,6 @@ def is_valid_cnpj(cnpj):
 
 def register(request):
     if request.method == "POST":
-        # Dados do formulário
         employee = request.POST['empregado_nome']
         employee_nif = request.POST['empregado_cpf']
         employee_position = request.POST['empregado_cargo']
@@ -97,7 +101,7 @@ def register(request):
         password = request.POST['senha']
         confirm_password = request.POST['senha2']
 
-        # Validações
+        # Validations (Your existing validations)
         if not is_valid_cpf(employee_nif):
             messages.error(request, 'CPF inválido!')
             return redirect('register')
@@ -130,7 +134,7 @@ def register(request):
 
         try:
             with transaction.atomic():
-                # 1. Get or create the Endereco
+                # 1. Get or create the Endereco (Your existing logic)
                 endereco, endereco_created = Endereco.objects.get_or_create(
                     rua=street,
                     bairro=neighborhood,
@@ -138,35 +142,32 @@ def register(request):
                     cep=zip_code,
                     cidade=city,
                     estado=state,
-                    defaults={}  # Any other defaults for Endereco
+                    defaults={}
                 )
 
-                # 2. Get or create the Empresa
+                # 2. Get or create the Empresa (Your existing logic)
                 empresa, empresa_created = Empresa.objects.get_or_create(
-                    cnpj=company_nif,  # Use CNPJ to find the company
+                    cnpj=company_nif,
                     defaults={
                         'nome_fantasia': company_name,
                         'telefone': phone,
-                        'endereco': endereco,  # Assign the endereco ONLY if the company is NEW
+                        'endereco': endereco,
                     }
                 )
 
-                # 3. Update the Empresa's address if it ALREADY EXISTED and it's a DIFFERENT address
                 if not empresa_created and empresa.endereco != endereco:
                     empresa.endereco = endereco
                     empresa.save()
 
-                # Verifica se o representante já está cadastrado
                 if Representante.objects.filter(cpf=employee_nif).exists():
                     messages.error(request, 'Representante legal já cadastrado!')
                     return redirect('register')
 
-                # Verifica se o nome de usuário já está em uso
                 if User.objects.filter(username=username).exists():
                     messages.error(request, 'Usuário já em uso!')
                     return redirect('register')
 
-                # Cria o usuário
+                # 3. Create the User (Modified)
                 user = User.objects.create_user(
                     username=username,
                     email=employee_email,
@@ -174,18 +175,28 @@ def register(request):
                     first_name=employee.split(' ')[0],
                     last_name=employee.split(' ')[-1]
                 )
+                user.is_active = False  # Deactivate the user
+                user.save()
 
-                # Cria o representante
-                Representante.objects.create(
+                # 4. Create the Representante (Modified)
+                representante = Representante.objects.create(
                     empresa=empresa,
                     nome=employee,
                     cpf=employee_nif,
                     cargo=employee_position,
                     email=employee_email,
-                    username=user
+                    username=user  # Link to the User
                 )
 
-                messages.success(request, 'Conta criada com sucesso! Faça login na plataforma.')
+                # 5. Generate and store token (New)
+                token = str(uuid.uuid4())
+                representante.activation_token = token
+                representante.save()
+
+                # 6. Send verification email (New)
+                send_verification_email(representante, user, token)
+
+                messages.success(request, 'Conta criada com sucesso! Verifique seu e-mail para ativar sua conta.')
                 return redirect('login')
 
         except Exception as e:
@@ -203,3 +214,51 @@ class CustomPasswordResetView(auth_views.PasswordResetView):
 class CustomPasswordResetConfirmView(auth_views.PasswordResetConfirmView):
     template_name = 'registration/password_reset_confirm.html'
     success_url = 'password_reset_complete'
+
+def send_verification_email(representante, user, token):
+    ses_client = boto3.client('ses')
+    subject = "Ative sua conta PROSESMT"
+    from_email = "your_verified_ses_email@example.com"  # Your verified SES email
+
+    activation_link = f"https://yourdomain.com/activate/?token={token}"  # Activation link
+
+    html_content = f"""
+    <html>
+    <body>
+        <p>Olá {representante.nome},</p>
+        <p>Obrigado por se registrar no PROSESMT.  Clique no link abaixo para ativar sua conta:</p>
+        <p><a href="{activation_link}">{activation_link}</a></p>
+    </body>
+    </html>
+    """
+
+    text_content = f"Olá {representante.nome},\n\nObrigado por se registrar no PROSESMT. Clique no link abaixo para ativar sua conta:\n\n{activation_link}"
+
+    msg = EmailMultiAlternatives(subject, text_content, from_email, [representante.email])
+    msg.attach_alternative(html_content, "text/html")
+
+    try:
+        msg.send()
+        print("Email enviado com sucesso!")
+    except Exception as e:
+        print(f"Erro ao enviar email: {e}")
+        # Log the error!
+
+def activate(request):
+    token = request.GET.get('token')
+    if token:
+        try:
+            representante = Representante.objects.get(activation_token=token)
+            user = representante.username # Get the related User object
+            user.is_active = True
+            user.save()
+            representante.activation_token = None
+            representante.save()
+            messages.success(request, "Conta ativada com sucesso!")
+            return redirect('login') # Redirect to the login page
+        except Representante.DoesNotExist:
+            messages.error(request, "Token de ativação inválido.")
+            return redirect('register') # Or any other appropriate page
+    else:
+        messages.error(request, "Nenhum token de ativação fornecido.")
+        return redirect('register') # Or any other appropriate page
