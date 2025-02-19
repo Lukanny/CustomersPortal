@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+/* Base styling */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+/* Wrapper adjustments to respect the sidebar */
+.wrapper {
+    display: flex;
+}
+
+.main {
+    margin-left: 250px;
+    padding: 20px;
+    width: calc(100% - 250px);
+}
+
+/* Card styling */
+.card {
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    margin-top: 30px;
+    padding: 20px;
+}
+
+.card-header {
+    font-weight: 600;
+    font-size: 1.25rem;
+    background-color: #09112d;
+    color: white;
+    border-radius: 8px 8px 0 0;
+    padding: 15px;
+}
+
+.card-body {
+    padding: 15px;
+}
+
+/* Form styling */
+form {
+    font-size: 1rem;
+}
+
+form input, form select {
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 1rem;
+    margin-bottom: 15px;
+    width: 100%;
+    border: 1px solid #ccc;
+}
+
+form button {
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: #09112d;
+    color: white;
+    border: none;
+    width: 100%;
+}
+
+form button:hover {
+    background-color: #0a1c3f;
+}
+
+/* Readonly fields */
+input[readonly] {
+    background-color: #343a40;
+    color: white;
+    cursor: not-allowed;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .main {
+        margin-left: 0;
+        padding: 10px;
+        width: 100%;
+    }
+
+    form input, form select {
+        font-size: 0.9rem;
+    }
+
+    form button {
+        font-size: 0.9rem;
+    }
+}
