@@ -11,10 +11,8 @@ from customers.models import Empresa, Endereco, Representante
 from customers.forms import RepresentanteForm
 from string import punctuation
 
-
 import re
 import uuid
-import boto3
 
 @login_required
 def dashboard(request):
@@ -22,10 +20,9 @@ def dashboard(request):
         worker = Representante.objects.get(username__username=request.user.username)
         company = worker.empresa
         files = company.files.all()
-        return render(request, "accounts/dashboard.html", {'files':files, 'worker':worker})
+        return render(request, "accounts/dashboard.html", {'files': files, 'worker': worker})
     except Representante.DoesNotExist:
         return HttpResponse('<h1>Não há um representante cadastrado, por favor, contatar o suporte.</h1>')
-
 
 @login_required
 def change_user_info(request):
@@ -57,8 +54,6 @@ def login(request):
 def custom_logout(request):
     logout(request)
     return redirect('login')
-
-
 
 def is_valid_cpf(cpf):
     """Valida o CPF"""
@@ -193,7 +188,7 @@ def register(request):
                 representante.activation_token = token
                 representante.save()
 
-                # 6. Send verification email (New)
+                # 6. Send verification email using Django's default email functions
                 send_verification_email(representante, user, token)
 
                 messages.success(request, 'Conta criada com sucesso! Verifique seu e-mail para ativar sua conta.')
@@ -211,22 +206,22 @@ class CustomPasswordResetView(auth_views.PasswordResetView):
     subject_template_name = 'registration/password_reset_subject.txt'
     success_url = 'password_reset_done'
 
+
 class CustomPasswordResetConfirmView(auth_views.PasswordResetConfirmView):
     template_name = 'registration/password_reset_confirm.html'
     success_url = 'password_reset_complete'
 
-def send_verification_email(representante, user, token):
-    ses_client = boto3.client('ses')
-    subject = "Ative sua conta PROSESMT"
-    from_email = "your_verified_ses_email@example.com"  # Your verified SES email
 
+def send_verification_email(representante, user, token):
+    subject = "Ative sua conta PROSESMT"
+    from_email = "your_verified_email@example.com"  # Use your verified email address (or DEFAULT_FROM_EMAIL from settings)
     activation_link = f"https://yourdomain.com/activate/?token={token}"  # Activation link
 
     html_content = f"""
     <html>
     <body>
         <p>Olá {representante.nome},</p>
-        <p>Obrigado por se registrar no PROSESMT.  Clique no link abaixo para ativar sua conta:</p>
+        <p>Obrigado por se registrar no PROSESMT. Clique no link abaixo para ativar sua conta:</p>
         <p><a href="{activation_link}">{activation_link}</a></p>
     </body>
     </html>
@@ -242,23 +237,23 @@ def send_verification_email(representante, user, token):
         print("Email enviado com sucesso!")
     except Exception as e:
         print(f"Erro ao enviar email: {e}")
-        # Log the error!
+        # Log the error as needed
 
 def activate(request):
     token = request.GET.get('token')
     if token:
         try:
             representante = Representante.objects.get(activation_token=token)
-            user = representante.username # Get the related User object
+            user = representante.username  # Get the related User object
             user.is_active = True
             user.save()
             representante.activation_token = None
             representante.save()
             messages.success(request, "Conta ativada com sucesso!")
-            return redirect('login') # Redirect to the login page
+            return redirect('login')  # Redirect to the login page
         except Representante.DoesNotExist:
             messages.error(request, "Token de ativação inválido.")
-            return redirect('register') # Or any other appropriate page
+            return redirect('register')  # Or any other appropriate page
     else:
         messages.error(request, "Nenhum token de ativação fornecido.")
-        return redirect('register') # Or any other appropriate page
+        return redirect('register')  # Or any other appropriate page

@@ -10,4 +10,4 @@ class ArquivoAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        return qs.select_related('cliente')  # Melhora a performance carregando o cliente junto
+        return qs.select_related('cliente')

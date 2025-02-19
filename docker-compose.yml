@@ -30,6 +30,18 @@ services:
           cpus: "0.25"
           memory: "256M"
 
+  scheduler:
+    build:
+      context: .
+    env_file:
+      - .env
+    command: >
+      sh -c "while true; do python manage.py notify_expired_files && sleep 86400; done"
+    networks:
+      - app_network
+    depends_on:
+      - django_gunicorn
+
   nginx:
     build:
       context: ./nginx

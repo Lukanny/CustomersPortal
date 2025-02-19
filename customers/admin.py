@@ -16,4 +16,4 @@ class EmpresaAdmin(admin.ModelAdmin):
     
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        return qs.prefetch_related('files')  # Carrega arquivos relacionados para performance
+        return qs.prefetch_related('files')
