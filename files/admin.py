@@ -3,11 +3,11 @@ from .models import Arquivo
 
 @admin.register(Arquivo)
 class ArquivoAdmin(admin.ModelAdmin):
-    list_display = ('cliente', 'nome_do_arquivo', 'ano_do_arquivo', 'data_de_upload_do_arquivo')
-    list_filter = ('ano_do_arquivo',)
-    search_fields = ('nome_do_arquivo', 'cliente__nome_fantasia_da_empresa')
-    ordering = ('cliente', 'ano_do_arquivo', 'nome_do_arquivo')
+    list_display = ('cliente', 'nome', 'ano', 'data_upload')
+    list_filter = ('ano',)
+    search_fields = ('nome', 'cliente__nome_fantasia')
+    ordering = ('cliente', 'ano', 'nome')
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        return qs.select_related('cliente')  # Melhora a performance carregando o cliente junto
+        return qs.select_related('cliente')
